@@ -11,4 +11,5 @@ It also takes postage into account
 
 # What does Dealesque get out of it?
 
-Dealesque is Amazon referral, so we get a small commision out of the items you actually end up buying
+Dealesque is Amazon affiliate, so we get a small commision out of the items you actually end up buying
+No expense on your side, whatsoever
