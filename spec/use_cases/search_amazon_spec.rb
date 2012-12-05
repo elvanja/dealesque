@@ -1,18 +1,19 @@
 require 'spec_helper_without_rails'
+require 'yaml'
 
 describe SearchAmazon do
   context "when searching by keywords" do
-    #let(:amazon_service) {AmazonService.new()}
-    #let(:subject) {SearchAmazon.new(amazon_service)}
+    let(:amazon_service) { AmazonService.new(stub) }
+    let(:subject) { SearchAmazon.new(amazon_service) }
 
-    it "with name of a known book" do
-
-      puts subject.with_keywords("Practical Object-Oriented Design in Ruby")
+    it "delegates to amazon service" do
+      amazon_service.should_receive(:search_with_keywords).with("Ulysses")
+      subject.with_keywords("Ulysses")
     end
   end
 
   context "when initializing" do
-    it "expects amazon service" do
+    it "requires amazon service" do
       expect { SearchAmazon.new(nil) }.to raise_error(ArgumentError)
     end
   end

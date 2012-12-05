@@ -14,6 +14,7 @@ Dir[File.expand_path('../support/**/*.rb', __FILE__)].each { |f| require f }
 unless defined?(Rails)
   %W(
     lib
+    app/services
     app/use_cases
   ).each do |autoload_path|
     Dir[File.expand_path("../../#{autoload_path}/**/*.rb", __FILE__)].each { |f| require f }
