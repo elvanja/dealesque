@@ -1,0 +1,3 @@
+class SearchAmazon
+
+end
