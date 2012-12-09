@@ -11,16 +11,23 @@ class AmazonService
     params = {
       'Operation' => 'ItemSearch',
       'SearchIndex' => 'All',
+      'ResponseGroup' => 'ItemAttributes,Offers',
       'Keywords' => keywords
     }
-    provider.get(query: params)
+
+    parse_search_response(provider.get(query: params).body)
   end
 
-  def provider
+  def provider(provider = Vacuum)
     return @provider if @provider
 
-    @provider = Vacuum.new
+    @provider = provider.new
     @provider.configure @amazon_credentials
     @provider
+  end
+
+  def parse_search_response(xml)
+    results = SearchResult.new.extend(SearchResultRepresenter)
+    results.from_xml(xml)
   end
 end

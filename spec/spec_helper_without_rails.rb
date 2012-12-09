@@ -5,6 +5,7 @@ require 'simplecov-rcov'
 # other dependencies
 require 'ostruct'
 require 'rspec/given'
+require 'json_spec'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -15,6 +16,8 @@ Dir[File.expand_path('../support/**/*.rb', __FILE__)].each { |f| require f }
 unless defined?(Rails)
   %W(
     lib
+    app/values
+    app/representers
     app/services
     app/use_cases
   ).each do |autoload_path|
@@ -34,4 +37,7 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  # https://github.com/collectiveidea/json_spec
+  config.include JsonSpec::Helpers
 end

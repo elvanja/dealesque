@@ -2,7 +2,9 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.9'
 gem 'jquery-rails'
-gem 'vacuum' # Amazon Product Advertising API support
+gem 'vacuum'      # Amazon Product Advertising API support
+gem 'roar'        # processing Amazon API results
+gem 'roar-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -15,16 +17,14 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'rspec-given'
+  gem 'json_spec'
 end
 
 group :development do
   gem 'ci_reporter'
   gem 'simplecov'
   gem 'simplecov-rcov'
-end
-
-group :test do
-  gem 'rspec-given'
 end
 
 # To use ActiveModel has_secure_password
