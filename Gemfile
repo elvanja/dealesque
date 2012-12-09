@@ -23,6 +23,10 @@ group :development do
   gem 'simplecov-rcov'
 end
 
+group :test do
+  gem 'rspec-given'
+end
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
