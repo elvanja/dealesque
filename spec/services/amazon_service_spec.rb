@@ -12,20 +12,26 @@ describe AmazonService do
   context "when searching" do
     context "with keywords" do
       let(:amazon_response) { OpenStruct.new(body: File.read("./doc/resources/amazon_search_response.xml")) }
-      let(:provider) { TestProvider = OpenStruct.new }
 
       it "is valid search" do
         pending "check for 'isvalid' return value, in case api changes"
       end
 
       it "constructs search result from response" do
-        provider.should_receive(:get).and_return(amazon_response)
-        subject.should_receive(:provider).and_return(provider)
+        subject.provider.stub(:get) { amazon_response }
         expect(subject.search_with_keywords("Practical Object-Oriented Design in Ruby")).to be_a(SearchResult)
       end
+    end
 
-      it "with name of a known book" do
-        pending "should return the book in results" # TODO to I need to test this at all?
+    context "when parsing search response" do
+      let(:amazon_response) { OpenStruct.new(
+          body: File.read("./doc/resources/amazon_search_response.xml").gsub(/<ItemSearchResponse>/, '<ItemSearchResponse xmlns="exists">')
+      )}
+
+      # TODO remove namespace fix after representable resolves pull request #26
+      it "removes namespace" do
+        subject.provider.stub(:get) { amazon_response }
+        expect(subject.search_with_keywords("Practical Object-Oriented Design in Ruby")).to be_a(SearchResult)
       end
     end
   end

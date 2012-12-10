@@ -18,16 +18,18 @@ class AmazonService
     parse_search_response(provider.get(query: params).body)
   end
 
-  def provider(provider = Vacuum)
+  def provider
     return @provider if @provider
 
-    @provider = provider.new
+    @provider = Vacuum.new
     @provider.configure @amazon_credentials
     @provider
   end
 
   def parse_search_response(xml)
     results = SearchResult.new.extend(SearchResultRepresenter)
-    results.from_xml(xml)
+    # TODO remove namespace fix after representable resolves pull request #26
+    #results.from_xml(xml)
+    results.from_xml(Nokogiri::XML(xml).remove_namespaces!.to_s)
   end
 end
