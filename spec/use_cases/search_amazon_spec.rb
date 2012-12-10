@@ -1,5 +1,4 @@
 require 'spec_helper_without_rails'
-require 'yaml'
 
 describe SearchAmazon do
   context "when searching by keywords" do

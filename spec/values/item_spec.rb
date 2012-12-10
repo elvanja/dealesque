@@ -2,14 +2,11 @@ require 'spec_helper_without_rails'
 
 describe Item do
   context "with attributes" do
-    it "has a title" do
-      expect(subject).to respond_to(:title)
-      expect(subject).to respond_to(:title=)
-    end
-
-    it "has a description" do
-      expect(subject).to respond_to(:description)
-      expect(subject).to respond_to(:description=)
+    %w{id title url group}.each do |property|
+      it "has #{property}" do
+        expect(subject).to respond_to(property.to_sym)
+        expect(subject).to respond_to("#{property}=".to_sym)
+      end
     end
   end
 
@@ -22,7 +19,7 @@ describe Item do
     end
 
     context "with supplied attributes" do
-      let(:attributes) { {title: "Shoulda coulda woulda", description: "The best book in the world"} }
+      let(:attributes) { {id: 1, title: "Shoulda coulda woulda", url: "http://some.url", group: "book"} }
       let(:subject) { Item.new(attributes) }
 
       it "fills up from supplied attributes" do

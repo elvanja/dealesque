@@ -6,6 +6,8 @@ module ItemRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::XML
 
-  property :title
-  property :description
+  property :id, from: "ASIN"
+  property :title, from: "Title", wrap: "ItemAttributes"
+  property :url, from: "DetailPageURL"
+  property :group, from: "ProductGroup", wrap: "ItemAttributes"
 end
