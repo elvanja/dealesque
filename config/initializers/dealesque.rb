@@ -1,4 +1,8 @@
 require 'yaml'
 
-# TODO notify if file is missing
-AMAZON_CREDENTIALS = YAML::load(File.open("config/amazon.yml"))[Rails.env]
+class ConfigurationError < StandardError; end
+
+credentials_file = "config/amazon.yml"
+raise ConfigurationError("Missing credentials file, expected to be at #{File.expand_path(credentials_file)}") unless File.exists?(credentials_file)
+
+AMAZON_CREDENTIALS = YAML::load(File.open(credentials_file))[Rails.env]
