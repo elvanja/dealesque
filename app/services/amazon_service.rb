@@ -6,12 +6,11 @@ class AmazonService
     @amazon_credentials = amazon_credentials
   end
 
-  # TODO: parse response into value objects
   def search_with_keywords(keywords)
     params = {
       'Operation' => 'ItemSearch',
       'SearchIndex' => 'All',
-      'ResponseGroup' => 'ItemAttributes,Offers',
+      'ResponseGroup' => 'ItemAttributes,Offers,Images',
       'Keywords' => keywords
     }
 

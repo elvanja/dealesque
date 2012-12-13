@@ -2,10 +2,13 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.9'
 gem 'jquery-rails'
-gem 'vacuum'      # Amazon Product Advertising API support
-gem 'roar'        # processing Amazon API results
-gem 'roar-rails'
 gem 'haml-rails'
+
+# Amazon Product Advertising API support
+gem 'vacuum'
+gem 'roar'
+gem 'roar-rails'
+gem 'virtus'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -23,14 +23,14 @@ describe SearchResultRepresenter do
 
     context "from xml" do
       context "with test xml data" do
-        let(:xml_items_data) { "<SearchResult><Items><Item/><Item/></Items></SearchResult>" }
+        let(:xml) { "<SearchResult><Items><Item/><Item/></Items></SearchResult>" }
 
         it "returns exact number of items" do
-          expect(search_result.from_xml(xml_items_data).items.size).to eq(2)
+          expect(search_result.from_xml(xml).items.size).to eq(2)
         end
 
         it "decodes items as Item" do
-          search_result.from_xml(xml_items_data).items.each do |item|
+          search_result.from_xml(xml).items.each do |item|
             expect(item).to be_a(Item)
           end
         end
