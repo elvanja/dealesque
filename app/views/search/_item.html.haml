@@ -1,7 +1,9 @@
 %li.span3
   .thumbnail
-    %p= link_to image_tag(item.image_set(:primary).thumbnail.url), item.url
+    %table.table-condensed
+      %tr
+        %td= image_tag(item.image_set(:primary).thumbnail.url)
+        %td.span2= item.title
     .caption
       = form_tag do_search_path, method: :put do
-        %p= item.title
-        %p= submit_tag 'Pick', class: "btn btn-primary"
+        %p= submit_tag 'Pick', class: "btn btn-info btn-small"

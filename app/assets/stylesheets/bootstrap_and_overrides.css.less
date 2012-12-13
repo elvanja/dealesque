@@ -30,4 +30,20 @@
 // Example:
 // @linkColor: #ff0000;
 
+// ************************* custom settings **************************
+
+// body is too high
 body { padding-top: 60px; }
+
+// ======================== item list ========================
+
+// http://stackoverflow.com/questions/9278569/equals-heights-of-thumbnails
+@fontAwesomeEotPath_iefix: asset-path("fontawesome-webfont.eot#iefix");
+ul.thumbnails.per3 > li:nth-child(3n+1) {
+  clear: left;
+}
+
+// top align of thumbnail item title
+ul.thumbnails.per3 td {
+  vertical-align: top;
+}
