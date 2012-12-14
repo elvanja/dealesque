@@ -8,6 +8,8 @@ module ItemImageRepresenter
   include Roar::Representer::XML
   include Roar::Representer::Feature::Coercion
 
+  self.representation_wrap = "ItemImage"
+
   property :url, from: "URL"
   property :height, type: Integer, from: "Height"
   property :width, type: Integer, from: "Width"

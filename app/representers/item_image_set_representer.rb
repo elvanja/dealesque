@@ -8,6 +8,8 @@ module ItemImageSetRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::XML
 
+  self.representation_wrap = "ImageSet"
+
   property :category, from: "Category", attribute: true
   property :tiny, extend: ItemImageRepresenter, class: ItemImage, from: "TinyImage"
   property :small, extend: ItemImageRepresenter, class: ItemImage, from: "SmallImage"

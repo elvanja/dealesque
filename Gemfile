@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.9'
 gem 'jquery-rails'
 gem 'haml-rails'
+gem 'dalli'
 
 # Amazon Product Advertising API support
 gem 'vacuum'
@@ -31,6 +32,9 @@ group :development do
   gem 'ci_reporter'
   gem 'simplecov'
   gem 'simplecov-rcov'
+
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 # To use ActiveModel has_secure_password

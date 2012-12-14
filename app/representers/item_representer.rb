@@ -8,6 +8,8 @@ module ItemRepresenter
   include Roar::Representer::JSON
   include Roar::Representer::XML
 
+  self.representation_wrap = "Item"
+
   property :id, from: "ASIN"
   property :title, from: "Title", wrap: "ItemAttributes"
   property :url, from: "DetailPageURL"
