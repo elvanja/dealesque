@@ -19,15 +19,15 @@ class PickedItemsController < ApplicationController
 
   def retrieve_picked_items_from_session
     @picked_items = PickedItems.new
-    @picked_items.extend(PickedItemsRepresenter).from_xml(session[:picked_items]) unless session[:picked_items] == nil # wtf? why do I need the nil check?
+    @picked_items.extend(PickedItemsRepresenter).from_json(session[:picked_items]) unless session[:picked_items] == nil # wtf? why do I need the nil check?
   end
 
   def store_picked_items_to_session
-    session[:picked_items] = @picked_items.extend(PickedItemsRepresenter).to_xml
+    session[:picked_items] = @picked_items.extend(PickedItemsRepresenter).to_json
   end
 
   def get_item_from_params
-    item = Item.new.extend(ItemRepresenter).from_xml(params[:item])
+    item = Item.new.extend(ItemRepresenter).from_json(params[:item])
     yield item if block_given?
     item
   end

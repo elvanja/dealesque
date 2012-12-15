@@ -22,13 +22,10 @@ module JsonRepresenterSpecHelper
       def should_compare_json_attribute(key, representer, subject, value)
         attribute = representer.representable_attrs.find { |attribute| attribute.name == key.to_s || attribute.options[:from] == key }
         fail("can't decode #{key} from json for #{subject.class}") unless attribute
-        expect(subject.send(attribute.name)).to eq(value)
+        expect(subject.public_send(attribute.name)).to eq(value)
       end
 
       def should_represent_from_json(representer, json, target_class = OpenStruct)
-        puts target_class.inspect
-        puts representer.inspect
-        puts json.inspect
         target_class.new.extend(representer).from_json(json)
       end
     end

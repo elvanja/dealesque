@@ -4,39 +4,29 @@ describe PickedItemsRepresenter do
   context "when representing" do
     let(:picked_items) do
       PickedItems.new.extend(subject).tap do |p|
-        p.add Item.new
-        p.add Item.new
+        p.add Item.new(id: "A1")
+        p.add Item.new(id: "A2")
       end
     end
 
     context "to JSON" do
-      # TODO resolve xml and json conflict
-    end
-
-    context "to XML" do
-      it "represents" do
-        expect(picked_items.to_xml).to match(/<PickedItems>.*<\/PickedItems>/m)
+      it "represents items" do
+        json_representation = picked_items.extend(subject).to_json
+        expect(json_representation).to have_json_path("items")
+        expect(json_representation).to have_json_size(2).at_path("items")
       end
     end
   end
 
   context "when consuming" do
-    let(:picked_items) { PickedItems.new.extend(subject) }
-
     context "from JSON" do
-      # TODO resolve xml and json conflict
-    end
+      let(:json) { %({"items":[{},{}]}) }
 
-    context "from XML" do
-      let(:xml) { "<PickedItems><Item/><Item/></PickedItems>" }
-
-      it "returns exact number of items" do
-        expect(picked_items.from_xml(xml).size).to eq(2)
-      end
-
-      it "decodes items as Item" do
-        picked_items.from_xml(xml).each do |item|
-          expect(item).to be_a(Item)
+      it "consumes items" do
+        picked_items = PickedItems.new.extend(subject).from_json(json)
+        expect(picked_items.size).to eq(2)
+        picked_items.items.each do |item|
+          expect(item).to be_a_kind_of(Item)
         end
       end
     end

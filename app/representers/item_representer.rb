@@ -1,18 +1,15 @@
 require 'roar/representer'
 require 'roar/representer/json'
-require 'roar/representer/xml'
+require 'roar/representer/json/hal'
 
-require_relative 'item_image_set_representer'
+require_relative 'item_image_representer'
 
 module ItemRepresenter
-  include Roar::Representer::JSON
-  include Roar::Representer::XML
+  include Roar::Representer::JSON::HAL
 
-  self.representation_wrap = "Item"
-
-  property :id, from: "ASIN"
-  property :title, from: "Title", wrap: "ItemAttributes"
-  property :url, from: "DetailPageURL"
-  property :group, from: "ProductGroup", wrap: "ItemAttributes"
-  collection :image_sets, extend: ItemImageSetRepresenter, class: ItemImageSet, from: "ImageSet", wrap: "ImageSets"
+  property :id
+  property :title
+  property :url
+  property :group
+  hash :images, extend: ItemImageRepresenter, class: ItemImage
 end

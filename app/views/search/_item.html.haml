@@ -2,9 +2,9 @@
   .thumbnail
     %table.table-condensed
       %tr
-        %td= image_tag item.image_set(:primary).thumbnail.url
+        %td= image_tag item.images[:thumbnail].url
         %td.span2= item.title
     .caption
       = form_tag pick_item_path, method: :put do
-        = hidden_field_tag :item, item.to_xml
+        = hidden_field_tag :item, item.to_json
         %p= submit_tag 'Pick', class: "btn btn-info btn-small"

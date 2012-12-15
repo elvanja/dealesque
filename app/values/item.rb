@@ -1,19 +1,38 @@
 class Item
-  attr_accessor :id, :title, :url, :group, :image_sets
+  include Comparable
+
+  attr_accessor :id, :title, :url, :group
+  attr_reader :images
 
   def initialize(attributes = {})
     raise ArgumentError unless attributes
 
-    attributes.each do |attribute, value|
-      attribute_method = "#{attribute}=".to_sym
-      send(attribute_method, value) if respond_to?(attribute_method)
+    {id: "", title: "", url: "", group: "", images: {}}.each do |property, default_value|
+      send("#{property}=", attributes[property] || default_value)
     end
 
-    @image_sets ||= []
+    coerce_images_keys_to_symbol
   end
 
-  # TODO this is representer fix, it collects into arrays, find a way to directly put images in Item or at least create a hash directly
-  def image_set(category)
-    @image_sets.find { |image_set| image_set.category.to_s == category.to_s}
+  def <=>(other)
+    id <=> other.id
+  end
+
+  def images=(images)
+    @images = images
+    coerce_images_keys_to_symbol
+  end
+
+  private
+
+  # TODO solve this in roar / representable
+  # coercion in roar causes problems for collections:
+  #   * all properties must be coerced (those that aren't are skipped)
+  #   * all the chain must use coercion
+  #   * hashes can't be serialized
+  def coerce_images_keys_to_symbol
+    coerced = {}
+    @images.each { |type, image| coerced[type.to_sym] = image }
+    @images = coerced
   end
 end

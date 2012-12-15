@@ -2,64 +2,40 @@ require 'spec_helper_without_rails'
 
 describe ItemRepresenter do
   context "when representing" do
-    let (:item) { Item.new(id: "A123456", title: "Practical Object-Oriented Design in Ruby") }
+    let (:item) { Item.new(id: "A123456", title: "Ulysses", url: "http://amazon", group: "Books", images: {small: ItemImage.new, large: ItemImage.new}) }
 
-    context "to XML" do
-      it "works" do
-        expect(item.extend(subject).to_xml).to match(/<Item>.*<\/Item>/m)
+    context "to JSON" do
+      it "represents properties" do
+        names = %({"id":"A123456","title":"Ulysses","url":"http://amazon","group":"Books"})
+        expect(item.extend(subject).to_json).to be_json_eql(names).excluding(:images)
+      end
+
+      it "represents images" do
+        json_representation = item.extend(subject).to_json
+        expect(json_representation).to have_json_path("images")
+        expect(json_representation).to have_json_path("images/small")
+        expect(json_representation).to have_json_path("images/large")
       end
     end
   end
 
   context "when consuming" do
     context "from JSON" do
-      it "should decode from JSON" do
-        # TODO resolve xml and json conflict
-        pending "using xml and json in representer breaks it: undefined method `has_key?' for nil:NilClass"
-      end
-    end
+      let(:json) { %({"id":"A123456","title":"Ulysses","url":"http://amazon","group":"Books","images":{"small":{},"large":{}}}) }
 
-    context "from XML" do
-      let (:xml) {"""
-        <Item>
-          <ASIN>0321721330</ASIN>
-          <DetailPageURL>http://www.amazon.com/Practical-Object-Oriented-Design-Ruby-Addison-Wesley</DetailPageURL>
-          <ItemAttributes>
-              <Author>Sandi Metz</Author>
-              <Manufacturer>Addison-Wesley Professional</Manufacturer>
-              <ProductGroup>Book</ProductGroup>
-              <Title>Practical Object-Oriented Design in Ruby: An Agile Primer (Addison-Wesley Professional Ruby Series)</Title>
-          </ItemAttributes>
-          <ImageSets>
-              <ImageSet Category=\"primary\"/>
-              <ImageSet Category=\"secondary\"/>
-          </ImageSets>
-        </Item>
-      """}
-
-      it "sets id" do
-        item = Item.new.extend(subject).from_xml(xml)
-        expect(item.id).to eq("0321721330")
+      it "consumes properties" do
+        item = Item.new.extend(subject).from_json(json)
+        expect(item.id).to eq("A123456")
+        expect(item.title).to eq("Ulysses")
+        expect(item.url).to eq("http://amazon")
+        expect(item.group).to eq("Books")
       end
 
-      it "sets title" do
-        item = Item.new.extend(subject).from_xml(xml)
-        expect(item.title).to eq("Practical Object-Oriented Design in Ruby: An Agile Primer (Addison-Wesley Professional Ruby Series)")
-      end
-
-      it "sets url" do
-        item = Item.new.extend(subject).from_xml(xml)
-        expect(item.url).to eq("http://www.amazon.com/Practical-Object-Oriented-Design-Ruby-Addison-Wesley")
-      end
-
-      it "sets group" do
-        item = Item.new.extend(subject).from_xml(xml)
-        expect(item.group).to eq("Book")
-      end
-
-      it "decodes image sets" do
-        item = Item.new.extend(subject).from_xml(xml)
-        expect(item.image_sets.size).to eq(2)
+      it "consumes images" do
+        item = Item.new.extend(subject).from_json(json)
+        expect(item.images.size).to eq(2)
+        expect(item.images[:small]).not_to eq(nil)
+        expect(item.images[:small]).to be_a_kind_of(ItemImage)
       end
     end
   end

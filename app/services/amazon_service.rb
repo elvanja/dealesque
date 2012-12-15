@@ -1,34 +1,21 @@
-require 'vacuum'
-
 class AmazonService
-  def initialize(amazon_credentials)
-    raise ArgumentError unless amazon_credentials
-    @amazon_credentials = amazon_credentials
+  def initialize(provider, parser = AmazonResponseParser.new)
+    raise ArgumentError unless provider && parser
+
+    @provider = provider
+    @parser = parser
   end
 
   def search_with_keywords(keywords)
-    params = {
-      'Operation' => 'ItemSearch',
-      'SearchIndex' => 'All',
-      'ResponseGroup' => 'ItemAttributes,Offers,Images',
-      'Keywords' => keywords
-    }
-
-    parse_search_response(provider.get(query: params).body)
+    search({
+               'Operation' => 'ItemSearch',
+               'SearchIndex' => 'All',
+               'ResponseGroup' => 'ItemAttributes,Offers,Images',
+               'Keywords' => keywords
+           })
   end
 
-  def provider
-    return @provider if @provider
-
-    @provider = Vacuum.new
-    @provider.configure @amazon_credentials
-    @provider
-  end
-
-  def parse_search_response(xml)
-    results = SearchResult.new.extend(SearchResultRepresenter)
-    # TODO remove namespace fix after representable resolves pull request #26
-    #results.from_xml(xml)
-    results.from_xml(Nokogiri::XML(xml).remove_namespaces!.to_s)
+  def search(params)
+    @parser.parse(@provider.get(query: params))
   end
 end

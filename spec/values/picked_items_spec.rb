@@ -1,12 +1,6 @@
 require 'spec_helper_without_rails'
 
 describe PickedItems do
-  context "when initializing" do
-    it "contains no items" do
-      expect(subject.empty?).to eq(true)
-    end
-  end
-
   context "when adding items" do
     let(:item) { Item.new }
 
@@ -28,12 +22,24 @@ describe PickedItems do
   end
 
   context "when removing items" do
-    let(:item) { Item.new }
+    let(:item) { Item.new(id: "A123456") }
     before(:each) { subject.add(item) }
 
     it "removes item" do
       subject.remove(item)
       expect(subject.include?(item)).to eq(false)
+    end
+
+    it "removes item with the same ID" do
+      other = Item.new(id: "A123456")
+      subject.remove(other)
+      expect(subject.include?(item)).to eq(false)
+    end
+  end
+
+  context "when initializing" do
+    it "contains no items" do
+      expect(subject.empty?).to eq(true)
     end
   end
 end

@@ -1,43 +1,54 @@
 require 'spec_helper_without_rails'
 
 describe AmazonService do
-  # TODO: use hash with indifferent access so reading credentials from yaml can use symbols
-  # http://stackoverflow.com/questions/7072986/rails-load-yaml-to-hash-and-reference-by-symbol
-  # TODO: record amazon responses and reuse in tests (no need to call amazon all the time)
-
-  let(:amazon_credentials) { OpenStruct.new(key: "key", secret: "secret", tag: "tag") }
-  let(:subject) { AmazonService.new(amazon_credentials) }
+  let(:provider) { stub }
+  let(:parser) { stub }
+  let(:subject) { AmazonService.new(provider, parser) }
 
   context "when searching" do
-    context "with keywords" do
-      let(:amazon_response) { OpenStruct.new(body: File.read("./doc/resources/amazon_search_response.xml")) }
-
-      it "is valid search" do
-        pending "check for 'isvalid' return value, in case api changes"
+    context "in general" do
+      it "delegates search to provider" do
+        provider.stub(:get)
+        parser.stub(:parse)
+        provider.should_receive(:get)
+        subject.search(stub)
       end
 
-      it "constructs search result from response" do
-        subject.provider.stub(:get) { amazon_response }
-        expect(subject.search_with_keywords("Odysseus")).to be_a(SearchResult)
+      it "delegates response parsing to parser" do
+        provider.stub(:get)
+        parser.should_receive(:parse)
+        subject.search(stub)
+      end
+
+      it "returns search results" do
+        provider.stub(:get)
+        parser.stub(:parse).and_return(SearchResult.new)
+        expect(subject.search(stub)).to be_a_kind_of(SearchResult)
       end
     end
 
-    context "when parsing search response" do
-      let(:amazon_response) { OpenStruct.new(
-          body: File.read("./doc/resources/amazon_search_response.xml").gsub(/<ItemSearchResponse>/, '<ItemSearchResponse xmlns="exists">')
-      )}
+    context "with keywords" do
+      let(:params) {{
+          'Operation' => 'ItemSearch',
+          'SearchIndex' => 'All',
+          'ResponseGroup' => 'ItemAttributes,Offers,Images',
+          'Keywords' => 'Odysseus'
+      }}
 
-      # TODO remove namespace fix after representable resolves pull request #26
-      it "removes namespace" do
-        subject.provider.stub(:get) { amazon_response }
-        expect(subject.search_with_keywords("Odysseus")).to be_a(SearchResult)
+      it "propagates keywords to provider" do
+        subject.should_receive(:search).with(params)
+        subject.search_with_keywords('Odysseus')
       end
     end
   end
 
   context "when initializing" do
-    it "requires amazon credentials" do
-      expect { AmazonService.new(nil) }.to raise_error(ArgumentError)
+    it "requires provider" do
+      expect { AmazonService.new(nil, stub) }.to raise_error(ArgumentError)
+    end
+
+    it "requires response parser" do
+      expect { AmazonService.new(stub, nil) }.to raise_error(ArgumentError)
     end
   end
 end

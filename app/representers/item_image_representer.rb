@@ -1,16 +1,12 @@
 require 'roar/representer'
 require 'roar/representer/json'
-require 'roar/representer/xml'
-require 'roar/representer/feature/coercion'
+require 'roar/representer/json/hal'
 
 module ItemImageRepresenter
-  include Roar::Representer::JSON
-  include Roar::Representer::XML
-  include Roar::Representer::Feature::Coercion
+  include Roar::Representer::JSON::HAL
 
-  self.representation_wrap = "ItemImage"
-
-  property :url, from: "URL"
-  property :height, type: Integer, from: "Height"
-  property :width, type: Integer, from: "Width"
+  property :url
+  property :height
+  property :width
+  property :type
 end
