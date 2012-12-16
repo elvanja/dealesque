@@ -27,4 +27,7 @@ Dealesque::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Cache data in memory, file store is the default
+  config.cache_store = :memory_store
 end

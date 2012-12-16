@@ -1,5 +1,5 @@
 class SearchResult
-  attr_accessor :items, :search_terms
+  attr_accessor :search_terms, :items
 
   def initialize(attributes = {})
     raise ArgumentError unless attributes

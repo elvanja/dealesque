@@ -1,3 +1,50 @@
+# Session storage in production
+
+Needed for picked items storage
+
+Workflow
+
+* JSON picked items representation is stored in user session
+* For picked requests, picked items are retrieved from session
+* Session expiration
+    * If every request refreshes (even non related), 10 minutes is enough
+      This means that we are effectively keeping sessions alive for active users
+    * If only picked items requests are refreshing the session, 30 minutes should be enough
+
+We can't store only item IDs because not only Amazon related data is present in Item
+E.g. offer selection for picked item can't be restored from Amazon
+
+Currently, each item JSON representation takes about 2KB
+That is ~ 12.000 items in 25MB
+Or ~ 2.000 sessions
+
+Since session storage is centralised, requests from all instances should be using the same session
+
+Solutions, Heroku related
+
+* DB
+    * expiration requires CRON job that cleans up the stale sessions
+    * [this](http://errtheblog.com/posts/22-sessions-n-such) article suggests MySQL and bare metal adapters
+    * active record store is also an option
+    * mongo [has](http://docs.mongodb.org/manual/tutorial/expire-data/) expire option
+    * Heroku free options
+        * [Postgres](https://addons.heroku.com/heroku-postgresql) 10.000 row limit => 10.000 sessions
+        * [MySQL](https://addons.heroku.com/cleardb) 5 MB => 400 sessions
+        * [MongoLab](https://addons.heroku.com/mongolab) 496 MB => 40.000 sessions
+        * [MongoHQ](https://addons.heroku.com/mongohq) 512 MB, 50 MB memory => 40.000 sessions
+* Cache
+    * Memcached
+        * Loosing a part of cache means we loose the intire session
+        * Heroku free options
+            * [MemCachier](https://addons.heroku.com/memcachier) 25 MB => 2.000 sessions
+    * Redis
+        * Loosing a part of cache means we loose the intire session
+        * Heroku free options
+            * [RedisToGo](https://addons.heroku.com/redistogo) 5 MB => 400 sessions
+            * [MyRedis](https://addons.heroku.com/myredis) 100 MB => 8.000 sessions
+            * [RedisCloud](https://addons.heroku.com/rediscloud) 1 GB => 80.000 sessions
+
+
 # Non empty home page
 
 Show deal of the day or some other items that Amazon displays on their home page

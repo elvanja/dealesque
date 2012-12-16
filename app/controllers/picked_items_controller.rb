@@ -18,12 +18,12 @@ class PickedItemsController < ApplicationController
   private
 
   def retrieve_picked_items_from_session
-    @picked_items = PickedItems.new
-    @picked_items.extend(PickedItemsRepresenter).from_json(session[:picked_items]) unless session[:picked_items] == nil # wtf? why do I need the nil check?
+    @picked_items = PickedItems.new.extend(PickedItemsRepresenter)
+    @picked_items.from_json(session[:picked_items]) if session[:picked_items]
   end
 
   def store_picked_items_to_session
-    session[:picked_items] = @picked_items.extend(PickedItemsRepresenter).to_json
+    session[:picked_items] = @picked_items.to_json
   end
 
   def get_item_from_params

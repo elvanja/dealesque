@@ -1,7 +1,7 @@
 require 'roar/representer'
 require 'roar/representer/json'
 
-require_relative "item_representer"
+require_relative 'item_representer'
 
 module SearchResultRepresenter
   include Roar::Representer::JSON
