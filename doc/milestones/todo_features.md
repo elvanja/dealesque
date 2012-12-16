@@ -44,6 +44,11 @@ Solutions, Heroku related
             * [MyRedis](https://addons.heroku.com/myredis) 100 MB => 8.000 sessions
             * [RedisCloud](https://addons.heroku.com/rediscloud) 1 GB => 80.000 sessions
 
+To make picked items session even more persistent
+
+* place ID/ASIN of picked items in cookie session
+* when restoring session, if items exist, use them otherwise fetch from Amazon
+
 
 # Non empty home page
 
