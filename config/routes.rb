@@ -1,4 +1,16 @@
 Dealesque::Application.routes.draw do
+
+  # TODO see if there is a better way to route search
+  # http://blog.jamesalmond.com/resourceful-routing-with-rails/
+  match 'search' => 'search#new'
+  match 'do_search' => 'search#search'
+
+  match 'picked' => 'picked_items#index'
+  match 'pick_item' => 'picked_items#pick'
+  match 'unpick_item' => 'picked_items#unpick'
+
+  root to: 'search#new'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

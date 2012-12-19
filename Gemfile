@@ -1,25 +1,41 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.9'
+gem 'jquery-rails'
+gem 'haml-rails'
+gem 'dalli'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-
+# Amazon Product Advertising API support
+gem 'vacuum'
+gem 'roar'
+gem 'roar-rails'
+gem 'virtus'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
-
+  gem 'therubyracer', :platforms => :ruby
   gem 'uglifier', '>= 1.0.3'
+  gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+  gem 'twitter-bootstrap-rails'
 end
 
-gem 'jquery-rails'
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'rspec-given'
+  gem 'json_spec'
+end
+
+group :development do
+  gem 'ci_reporter'
+  gem 'simplecov'
+  gem 'simplecov-rcov'
+
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

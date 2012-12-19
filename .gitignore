@@ -17,3 +17,5 @@
 # Ignore Idea files
 *.iml
 .idea
+
+amazon.yml
