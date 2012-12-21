@@ -2,7 +2,7 @@ require 'spec_helper_without_rails'
 
 describe CreateAmazonCart do
   context "when searching by keywords" do
-    let(:amazon_service) { AmazonService.new(stub, stub) }
+    let(:amazon_service) { AmazonService.new(stub) }
     let(:subject) { CreateAmazonCart.new(amazon_service) }
     let(:picked_items) { stub }
 

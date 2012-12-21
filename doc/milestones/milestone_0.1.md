@@ -18,6 +18,9 @@ Should work for Amazon logged in users and logged out too
 
 ## TODO
 
+* use [crack](https://github.com/jnunemaker/crack) to convert response xml to hash
+* use [hashie](https://github.com/intridea/hashie) to parse response hash
+  try coercing parts directly to classes
 * add to remote cart
     * use offer id to place items in cart
     * remote cart should be session persisted

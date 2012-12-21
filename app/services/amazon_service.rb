@@ -1,27 +1,25 @@
 class AmazonService
-  def initialize(provider, parser = AmazonResponseParser.new)
-    raise ArgumentError unless provider && parser
-
+  def initialize(provider)
+    raise ArgumentError unless provider
     @provider = provider
-    @parser = parser
   end
 
   def create_cart_with(picked_items)
-    search 'Operation' => 'ItemSearch',
-           'SearchIndex' => 'All',
-           'ResponseGroup' => 'ItemAttributes,Offers,Images',
-           'Keywords' => keywords
+    params = {'Operation' => 'CartCreate'}
+    picked_items.each_with_index do |item, index|
+      params["Item.#{index}.ASIN"] = item.id.to_s
+      params["Item.#{index}.Quantity"] = 1.to_s
+    end
+    AmazonCartResponseParser.new.parse(call(params))
   end
 
   def search_with_keywords(keywords)
-    search 'Operation' => 'ItemSearch',
-           'SearchIndex' => 'All',
-           'ResponseGroup' => 'ItemAttributes,Offers,Images',
-           'Keywords' => keywords
-  end
-
-  def search(params)
-    @parser.parse(call(params))
+    AmazonSearchResponseParser.new.parse (
+      call  'Operation' => 'ItemSearch',
+            'SearchIndex' => 'All',
+            'ResponseGroup' => 'ItemAttributes,Offers,Images',
+            'Keywords' => keywords
+    )
   end
 
   private

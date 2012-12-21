@@ -7,6 +7,8 @@ gem 'dalli'
 
 # Amazon Product Advertising API support
 gem 'vacuum'
+gem 'crack'
+gem 'hashie'
 gem 'roar'
 gem 'roar-rails'
 gem 'virtus'

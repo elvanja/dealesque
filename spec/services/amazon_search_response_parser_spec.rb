@@ -1,8 +1,8 @@
 require 'spec_helper_without_rails'
 
-describe AmazonResponseParser do
+describe AmazonSearchResponseParser do
   context "when parsing" do
-    let(:response) { OpenStruct.new(body: File.read("./doc/resources/amazon_search_response.xml")) }
+    let(:response) { OpenStruct.new(body: File.read("./doc/resources/amazon_api_responses/search_response.xml")) }
 
     it "returns search result" do
       expect(subject.parse(stub.as_null_object)).to be_a_kind_of(SearchResult)
