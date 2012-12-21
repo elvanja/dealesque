@@ -18,7 +18,6 @@ Should work for Amazon logged in users and logged out too
 
 ## TODO
 
-* migrate from vacuum to asin
 * add to remote cart
     * use offer id to place items in cart
     * remote cart should be session persisted

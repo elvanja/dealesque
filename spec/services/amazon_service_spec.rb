@@ -42,6 +42,14 @@ describe AmazonService do
     end
   end
 
+  context "when creating cart" do
+    it "invokes cart creating on provider" do
+      provider.stub(:get)
+      provider.should_receive(:get)
+      subject.create_cart_with(stub)
+    end
+  end
+
   context "when initializing" do
     it "requires provider" do
       expect { AmazonService.new(nil, stub) }.to raise_error(ArgumentError)
