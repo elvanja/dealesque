@@ -2,31 +2,9 @@ require 'spec_helper_without_rails'
 
 describe AmazonService do
   let(:provider) { stub }
-  let(:parser) { stub }
-  let(:subject) { AmazonService.new(provider, parser) }
+  let(:subject) { AmazonService.new(provider) }
 
   context "when searching" do
-    context "in general" do
-      it "delegates search to provider" do
-        provider.stub(:get)
-        parser.stub(:parse)
-        provider.should_receive(:get)
-        subject.search(stub)
-      end
-
-      it "delegates response parsing to parser" do
-        provider.stub(:get)
-        parser.should_receive(:parse)
-        subject.search(stub)
-      end
-
-      it "returns search results" do
-        provider.stub(:get)
-        parser.stub(:parse).and_return(SearchResult.new)
-        expect(subject.search(stub)).to be_a_kind_of(SearchResult)
-      end
-    end
-
     context "with keywords" do
       let(:params) {{
           'Operation' => 'ItemSearch',
@@ -36,27 +14,33 @@ describe AmazonService do
       }}
 
       it "propagates keywords to provider" do
-        subject.should_receive(:search).with(params)
+        AmazonSearchResponseParser.any_instance.should_receive(:parse)
+        provider.should_receive(:get).with({query: params})
         subject.search_with_keywords('Odysseus')
       end
     end
   end
 
   context "when creating cart" do
+    let(:picked_items) { [Item.new(id: 1), Item.new(id: 2)] }
+    let(:params) {{
+        'Operation' => 'CartCreate',
+        'Item.0.ASIN' => '1',
+        'Item.0.Quantity' => '1',
+        'Item.1.ASIN' => '2',
+        'Item.1.Quantity' => '1'
+    }}
+
     it "invokes cart creating on provider" do
-      provider.stub(:get)
-      provider.should_receive(:get)
-      subject.create_cart_with(stub)
+      AmazonCartResponseParser.any_instance.should_receive(:parse)
+      provider.should_receive(:get).with({query: params})
+      subject.create_cart_with(picked_items)
     end
   end
 
   context "when initializing" do
     it "requires provider" do
-      expect { AmazonService.new(nil, stub) }.to raise_error(ArgumentError)
-    end
-
-    it "requires response parser" do
-      expect { AmazonService.new(stub, nil) }.to raise_error(ArgumentError)
+      expect { AmazonService.new(nil) }.to raise_error(ArgumentError)
     end
   end
 end

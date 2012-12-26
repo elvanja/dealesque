@@ -8,6 +8,9 @@ Dealesque::Application.routes.draw do
   match 'picked' => 'picked_items#index'
   match 'pick_item' => 'picked_items#pick'
   match 'unpick_item' => 'picked_items#unpick'
+  match 'clear_picked' => 'picked_items#clear'
+
+  match 'create_cart' => 'cart#create'
 
   root to: 'search#new'
 

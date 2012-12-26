@@ -3,10 +3,13 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.9'
 gem 'jquery-rails'
 gem 'haml-rails'
+gem 'rails_autolink'
 gem 'dalli'
 
 # Amazon Product Advertising API support
 gem 'vacuum'
+gem 'crack'
+gem 'hashie'
 gem 'roar'
 gem 'roar-rails'
 gem 'virtus'

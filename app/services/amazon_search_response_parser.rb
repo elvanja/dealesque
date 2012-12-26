@@ -1,9 +1,6 @@
 require 'nokogiri'
 
-class AmazonResponseParser
-  # search result => search terms + items => item => data + images => image
-  # Items => Item => ImageSets => ImageSet => Image
-  # Items => Item => ItemAttributes
+class AmazonSearchResponseParser
   def parse(response)
     root = Nokogiri::XML(response.body).remove_namespaces!
 
@@ -54,7 +51,7 @@ class AmazonResponseParser
       if nodes.first
         value = nodes.first.content
         value = value.send(apply_method) if apply_method
-        attributes[key] = value
+        attributes[key] = (value.respond_to?(:strip) ? value.strip : value)
       end
     end
   end
