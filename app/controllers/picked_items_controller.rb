@@ -1,5 +1,5 @@
 class PickedItemsController < ApplicationController
-  before_filter :retrieve_picked_items_from_session
+  before_filter :retrieve_picked_items_from_session, except: :clear
   after_filter :store_picked_items_to_session, except: :index
 
   def index
@@ -15,10 +15,15 @@ class PickedItemsController < ApplicationController
     redirect_to action: :index
   end
 
+  def clear
+    create_new_picked_items
+    redirect_to search_path
+  end
+
   private
 
   def retrieve_picked_items_from_session
-    @picked_items = PickedItems.new.extend(PickedItemsRepresenter)
+    create_new_picked_items
     @picked_items.from_json(session[:picked_items]) if session[:picked_items]
   end
 
@@ -30,5 +35,9 @@ class PickedItemsController < ApplicationController
     item = Item.new.extend(ItemRepresenter).from_json(params[:item])
     yield item if block_given?
     item
+  end
+
+  def create_new_picked_items
+    @picked_items = PickedItems.new.extend(PickedItemsRepresenter)
   end
 end

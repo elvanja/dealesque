@@ -49,6 +49,10 @@ To make picked items session even more persistent
 * place ID/ASIN of picked items in cookie session
 * when restoring session, if items exist, use them otherwise fetch from Amazon
 
+Amazon remote cart could be used as well
+The only drawback is that not all domain data will be contained in the cart
+So for each request, all the items would need to be looked up on Amazon
+Seems like too much traffic (unless some sort of caching is used)
 
 # Non empty home page
 

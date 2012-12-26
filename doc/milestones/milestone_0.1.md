@@ -18,11 +18,10 @@ Should work for Amazon logged in users and logged out too
 
 ## TODO
 
+* add notifications to actions
+  e.g. when picked an item, say it way picked, when unpicked, when unpick all etc.
 * use [crack](https://github.com/jnunemaker/crack) to convert response xml to hash
 * use [hashie](https://github.com/intridea/hashie) to parse response hash
   try coercing parts directly to classes
-* add to remote cart
-    * use offer id to place items in cart
-    * remote cart should be session persisted
 * see if there is a wey to add kindle books to cart
     * see https://affiliate-program.amazon.com/gp/associates/network/main.html and how they build the links

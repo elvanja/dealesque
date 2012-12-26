@@ -25,11 +25,11 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand(href="/") Dealesque
+          %a.brand(href=root_path) Dealesque
           .container.nav-collapse
             %ul.nav
-              %li= link_to "Home", "/"
-              %li= link_to "Picked", "/picked"
+              %li= link_to "Home", root_path
+              %li= link_to "Picked", picked_path
 
     .container
 
@@ -37,13 +37,8 @@
         .span9
           = bootstrap_flash
           = yield
-        .span3
-          .well.sidebar-nav
-            %h3 Sidebar
-            %ul.nav.nav-list
-              %li.nav-header Sidebar
-              %li= link_to "Home", "/"
-              %li= link_to "Picked", "/picked"
+        - if content_for?(:sidebar)
+          = yield :sidebar
 
       %footer
         %p &copy; Dealesque 2012
