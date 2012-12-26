@@ -8,4 +8,4 @@
       %li.nav-header Hints
       .muted Enter the search terms like you would on Amazon
       .muted Hit Pick on the desired item
-      .muted= auto_link("Go to #{link_to("picked", picked_path)} items when finished")
+      .muted= "Go to #{link_to("picked", picked_path)} items when finished".html_safe

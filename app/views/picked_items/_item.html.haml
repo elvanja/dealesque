@@ -9,4 +9,4 @@
     .caption
       = form_tag unpick_item_path, method: :put do
         = hidden_field_tag :item, item.to_json
-        %p= submit_tag 'Unpick', class: "btn btn-warn btn-small"
+        = submit_tag 'Unpick', class: "btn btn-warn btn-small"
