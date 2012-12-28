@@ -1,32 +1,30 @@
 # Milestone 0.2
 
-## Pick item
+## Find the best offer
 
-Make pick action work with ajax
-It should
-* place item in picked items
-* show notification
-* show last picked item in sidebar, with option to undo the action
+Using picked items, search the offers for each item and find the least expensive combination
+Use used item offers by default
+Try to find the most common used offer merchant to reduce postage costs
+If available, use the postage information too
 
-## Unpick item
+## Put items in Amazon cart
 
-Make unpick action work with ajax
-It should
-* remove item from picked items
-* show notification
-* show last unpicked item in sidebar, with option to undo the action
+Put items with the computed offer / price / merchant
 
-## Search items
+## Browse Amazon items
 
-Make search action work with ajax
-It should
-* react on entered search terms, e.g. if user delays the input for about 2 seconds
-* show found items
-* on escape, return the previous search result
-* in sidebar, show last few searches
+Show Amazon list price
+Show smallest used price, if available
 
-# Resources
+## Picked items
 
-http://railscasts.com/episodes/205-unobtrusive-javascript
-https://github.com/rails/jquery-ujs
-https://gist.github.com/1435401 (Prettier Rails confirmation dialogs)
+### When not computed
+
+Show Amazon list price
+Show smallest used price, if available
+
+### When computed
+
+Show computed price per item
+Show merchant
+Group items by merchant (colorize)

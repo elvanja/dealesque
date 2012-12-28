@@ -1,3 +1,25 @@
+# Best offer
+
+Let user pick a specific offer for an item (sticky)
+Recalculate offer around sticky items
+Allow for several offers to be remembered
+Enable offer comparison
+
+# Non empty home page
+
+Show deal of the day or some other items that Amazon displays on their home page
+So our home page would not be empty
+
+# Amazon shop selection
+
+Let user choose the Amazon shop from which to pull data
+And to which put the items in the cart
+
+# Internationalization
+
+Enable different locales for UI
+According to selected locale, offer to change Amazon shop
+
 # Session storage in production
 
 Needed for picked items storage
@@ -53,18 +75,3 @@ Amazon remote cart could be used as well
 The only drawback is that not all domain data will be contained in the cart
 So for each request, all the items would need to be looked up on Amazon
 Seems like too much traffic (unless some sort of caching is used)
-
-# Non empty home page
-
-Show deal of the day or some other items that Amazon displays on their home page
-So our home page would not be empty
-
-# Amazon shop selection
-
-Let user choose the Amazon shop from which to pull data
-And to which put the items in the cart
-
-# Internationalization
-
-Enable different locales for UI
-According to selected locale, offer to change Amazon shop
