@@ -1,0 +1,10 @@
+%li.span3
+  .thumbnail
+    %table.table-condensed
+      %tr
+        %td= image_tag item.images[:thumbnail].url
+        %td.span2= item.title
+    .caption
+      = form_tag pick_item_path, method: :put do
+        = hidden_field_tag :item, item.to_json
+        = submit_tag 'Pick', class: "btn btn-info btn-small"
