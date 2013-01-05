@@ -38,7 +38,7 @@ echo "commiting compiled assets"
 git add -A .
 git commit -m "added precompiled assets"
 echo "pushing to heroku"
-#git push -f heroku HEAD:master
+git push -f heroku HEAD:master
 echo "returning to trigger branch"
 git checkout $CALLER_BRANCH
 echo "removing deploy branch"
