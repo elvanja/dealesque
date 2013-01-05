@@ -26,6 +26,7 @@ require_clean_work_tree () {
   fi
 }
 
+# http://stackoverflow.com/questions/1593051/how-to-programmatically-determine-the-current-checked-out-git-branch
 CALLER_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)"
 
 echo "checking working tree status, must be clear"
@@ -38,6 +39,7 @@ echo "commiting compiled assets"
 git add -A .
 git commit -m "added precompiled assets"
 echo "pushing to heroku"
+# http://stackoverflow.com/questions/2971550/how-to-push-different-local-git-branches-to-heroku-master
 git push -f heroku HEAD:master
 echo "returning to trigger branch"
 git checkout $CALLER_BRANCH
