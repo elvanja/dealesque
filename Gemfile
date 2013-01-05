@@ -4,6 +4,7 @@ gem 'rails', '3.2.9'
 gem 'jquery-rails'
 gem 'haml-rails'
 gem 'dalli'
+gem 'thin'
 
 # Amazon Product Advertising API support
 gem 'vacuum'
