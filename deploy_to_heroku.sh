@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# http://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommited-changes
 require_clean_work_tree () {
   # Update the index
   git update-index -q --ignore-submodules --refresh
@@ -20,16 +21,25 @@ require_clean_work_tree () {
   fi
 
   if [ $err = 1 ]; then
-      echo >&2 "Please commit or stash them."
+      echo >&2 "please commit or stash them."
       exit 1
   fi
 }
 
+CALLER_BRANCH="$(git rev-parse --symbolic-full-name --abbrev-ref HEAD)"
+
+echo "checking working tree status, must be clear"
 require_clean_work_tree
+echo "creating deploy branch"
 git checkout -b deploy_to_heroku
+echo "compiling assets"
 RAILS_ENV=production rake assets:precompile
+echo "commiting compiled assets"
 git add -A .
 git commit -m "added precompiled assets"
+echo "pushing to heroku"
 #git push -f heroku HEAD:master
-git checkout develop
+echo "returning to trigger branch"
+git checkout $CALLER_BRANCH
+echo "removing deploy branch"
 git branch -D deploy_to_heroku
