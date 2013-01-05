@@ -25,19 +25,11 @@ require_clean_work_tree () {
   fi
 }
 
-
 require_clean_work_tree
-echo "all ok"
-exit
-
-git flow release start deploy_to_heroku
-if [ $? -ne 0 ]; then
-  echo "You must have a clean branch to deploy to heroku"
-  exit
-fi
+git checkout -b deploy_to_heroku
 RAILS_ENV=production rake assets:precompile
 git add -A .
 git commit -m "added precompiled assets"
 #git push -f heroku HEAD:master
 git checkout develop
-git branch -D release/deploy_to_heroku
+git branch -D deploy_to_heroku
