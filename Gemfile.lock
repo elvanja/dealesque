@@ -45,7 +45,6 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.4.0)
-    commonjs (0.2.6)
     crack (0.3.1)
     daemons (1.1.9)
     dalli (2.5.0)
@@ -75,11 +74,6 @@ GEM
     json_spec (1.1.0)
       multi_json (~> 1.0)
       rspec (~> 2.0)
-    less (2.2.2)
-      commonjs (~> 0.2.6)
-    less-rails (2.2.6)
-      actionpack (>= 3.1)
-      less (~> 2.2.0)
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -203,7 +197,6 @@ DEPENDENCIES
   hashie
   jquery-rails
   json_spec
-  less-rails
   meta_request
   rails (= 3.2.9)
   roar
