@@ -7,6 +7,7 @@ require 'yaml'
 require 'ostruct'
 require 'rspec/given'
 require 'json_spec'
+require 'vcr'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -24,6 +25,11 @@ unless defined?(Rails)
   ).each do |autoload_path|
     Dir[File.expand_path("../../#{autoload_path}/**/*.rb", __FILE__)].each { |f| require f }
   end
+end
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
+  c.hook_into :excon # Vacuum uses it
 end
 
 RSpec.configure do |config|

@@ -2,7 +2,7 @@ require 'spec_helper_without_rails'
 
 describe AmazonCartResponseParser do
   context "when parsing" do
-    let(:response) { OpenStruct.new(body: File.read("./doc/resources/amazon_api_responses/create_cart_response.xml")) }
+    let(:response) { OpenStruct.new(body: File.read("spec/fixtures/amazon_api_responses/create_cart_response.xml")) }
 
     it "returns cart" do
       expect(subject.parse(stub.as_null_object)).to be_a_kind_of(Cart)

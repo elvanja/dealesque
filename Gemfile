@@ -29,6 +29,8 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-given'
   gem 'json_spec'
+  gem 'vcr'
+  gem 'fakeweb'
 end
 
 group :development do
