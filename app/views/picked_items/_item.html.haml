@@ -4,7 +4,7 @@
   .thumbnail
     %table.table-condensed
       %tr
-        %td= image_tag item.images[:thumbnail].url
+        %td= image_tag item.images[:thumbnail].try(:url) || image_path("hot_plate.jpg")
         %td.span2= item.title
     .caption
       = form_tag unpick_item_path, method: :put do

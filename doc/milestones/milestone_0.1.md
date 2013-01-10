@@ -18,8 +18,6 @@ Should work for Amazon logged in users and logged out too
 
 ## TODO
 
-* add notifications to actions
-  e.g. when picked an item, say it way picked, when unpicked, when unpick all etc.
 * use [crack](https://github.com/jnunemaker/crack)
   to convert response xml to hash
 * use [hashie](https://github.com/intridea/hashie)
