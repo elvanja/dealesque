@@ -8,8 +8,6 @@ gem 'thin'
 
 # Amazon Product Advertising API support
 gem 'vacuum'
-gem 'crack'
-gem 'hashie'
 gem 'roar'
 gem 'roar-rails'
 gem 'virtus'
@@ -30,7 +28,6 @@ group :development, :test do
   gem 'rspec-given'
   gem 'json_spec'
   gem 'vcr'
-  gem 'fakeweb'
 end
 
 group :development do

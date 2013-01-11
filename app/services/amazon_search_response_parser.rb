@@ -1,65 +1,58 @@
-require 'hashie/mash'
-require 'crack/xml'
+require 'nokogiri'
 
 class AmazonSearchResponseParser
+  include AmazonParser
+
   def parse(response)
-    data = Hashie::Mash.new(Crack::XML.parse(response.body))
+    root = Nokogiri::XML(response.body).remove_namespaces!
 
     attributes = {}
-    attributes[:search_terms] = parse_search_terms(data)
-    attributes[:items] = parse_items(data)
+    attributes[:search_terms] = parse_search_terms(root)
+    attributes[:items] = parse_items(root)
 
     SearchResult.new(attributes)
   end
 
   private
 
-  def parse_search_terms(data)
-    keywords = data.ItemSearchResponse.OperationRequest.Arguments.Argument.find {|argument| argument.Name == 'Keywords'}
-    keywords ? keywords.Value : ""
+  def parse_search_terms(node)
+    parse_value(node, '//OperationRequest/Arguments/Argument[@Name="Keywords"]/@Value')
   end
 
-  def parse_items(data)
-    items_data = data.ItemSearchResponse.Items.Item
-    if items_data.kind_of?(Array)
-      items_data.map {|item_data| create_item_from(item_data)}
-    else
-      [create_item_from(items_data)]
+  def parse_items(node)
+    node.xpath('//Items/Item').map do |item_node|
+      create_item_from(item_node)
     end
   end
 
-  def create_item_from(data)
+  def create_item_from(node)
     attributes = {}
-    attributes[:id] = data.ASIN
-    attributes[:title] = data.ItemAttributes.Title
-    attributes[:url] = data.DetailPageURL
-    attributes[:group] = data.ItemAttributes.ProductGroup
-    attributes[:images] = parse_item_images(data)
+    attributes[:id] = parse_value(node, './ASIN')
+    attributes[:title] = parse_value(node, './ItemAttributes/Title')
+    attributes[:url] = parse_value(node, './DetailPageURL')
+    attributes[:group] = parse_value(node, './ItemAttributes/ProductGroup')
+    attributes[:images] = parse_item_images(node)
     Item.new(attributes)
   end
 
-  def parse_item_images(data)
-    return unless data.respond_to?(:ImageSets)
+  def parse_item_images(node)
+    image_sets = node.xpath('./ImageSets/ImageSet')
+    return if image_sets.children.size == 0
 
-    image_set = data.ImageSets.ImageSet
-    if image_set.kind_of?(Array)
-      image_set = image_set.find { |image_set| image_set.Category == 'primary' }
-      image_set ||= image_set.first
-    end
-
-    image_set.keys.select { |key| key =~ /.*Image/ }.inject(Hash.new) do |images, key|
-      image = create_item_image_from(image_set.send(key), key)
+    image_set = image_sets.find {|image_set| image_set.attribute('Category').value == 'primary'} || image_sets.first
+    image_set.xpath('./*').inject(Hash.new) do |images, image_node|
+      image = create_item_image_from(image_node)
       images[image.type] = image
       images
     end
   end
 
-  def create_item_image_from(item_data, type)
+  def create_item_image_from(node)
     attributes = {}
-    attributes[:url] = item_data.URL
-    attributes[:height] = item_data.Height.to_i
-    attributes[:width] = item_data.Width.to_i
-    attributes[:type] = type.gsub("Image", "").downcase
+    attributes[:url] = parse_value(node, './URL')
+    attributes[:height] = parse_value(node, './Height', :to_i)
+    attributes[:width] = parse_value(node, './Width', :to_i)
+    attributes[:type] = node.name.gsub("Image", "").downcase
     ItemImage.new(attributes)
   end
 end

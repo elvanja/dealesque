@@ -1,4 +1,10 @@
 Crack / Hashie vs Nokogiri, performance and code style
+  * [crack](https://github.com/jnunemaker/crack)
+  * [hashie](https://github.com/intridea/hashie)
+  Test results parsing Amazon response with 9 items in 100 consecutive runs
+  Nokogiri: 1.18, 1.26, 1.27, 1.33, 1.23
+  Crack & Hashie: 7.06, 7.87, 7.56, 7.58, 7.44
+
 Vacuum vs ASIN gems for accessing Amazon Product Advertising API - cover search and add to Cart
 Parsing XML and JSON with the same Roar representer
 XML parsing Roar limitations
