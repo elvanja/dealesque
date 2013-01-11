@@ -1,58 +1,65 @@
-require 'nokogiri'
+require 'hashie/mash'
+require 'crack/xml'
 
 class AmazonSearchResponseParser
   def parse(response)
-    root = Nokogiri::XML(response.body).remove_namespaces!
+    data = Hashie::Mash.new(Crack::XML.parse(response.body))
 
     attributes = {}
-    append_search_terms_from(root, attributes)
-    append_items(root, attributes)
+    attributes[:search_terms] = parse_search_terms(data)
+    attributes[:items] = parse_items(data)
 
     SearchResult.new(attributes)
   end
 
   private
 
-  def append_search_terms_from(root, attributes)
-    append_if_exists(attributes, :search_terms, root, '//OperationRequest/Arguments/Argument[@Name="Keywords"]/@Value')
+  def parse_search_terms(data)
+    keywords = data.ItemSearchResponse.OperationRequest.Arguments.Argument.find {|argument| argument.Name == 'Keywords'}
+    keywords ? keywords.Value : ""
   end
 
-  def append_items(root, attributes)
-    attributes[:items] = root.xpath('//Items/Item').map do |node|
-      create_item_from(node)
+  def parse_items(data)
+    items_data = data.ItemSearchResponse.Items.Item
+    if items_data.kind_of?(Array)
+      items_data.map {|item_data| create_item_from(item_data)}
+    else
+      [create_item_from(items_data)]
     end
   end
 
-  def create_item_from(node)
+  def create_item_from(data)
     attributes = {}
-    append_if_exists(attributes, :id, node, './ASIN')
-    append_if_exists(attributes, :title, node, './ItemAttributes/Title')
-    append_if_exists(attributes, :url, node, './DetailPageURL')
-    append_if_exists(attributes, :group, node, './ItemAttributes/ProductGroup')
-    attributes[:images] = node.xpath('./ImageSets/ImageSet[@Category="primary"]/*').inject(Hash.new) do |images, image_node|
-      image = create_item_image_from(image_node)
-      images[image.type] = image
-      images
-    end
+    attributes[:id] = data.ASIN
+    attributes[:title] = data.ItemAttributes.Title
+    attributes[:url] = data.DetailPageURL
+    attributes[:group] = data.ItemAttributes.ProductGroup
+    attributes[:images] = parse_item_images(data)
     Item.new(attributes)
   end
 
-  def create_item_image_from(node)
-    attributes = {}
-    append_if_exists(attributes, :url, node, './URL')
-    append_if_exists(attributes, :height, node, './Height', :to_i)
-    append_if_exists(attributes, :width, node, './Width', :to_i)
-    attributes[:type] = node.name.gsub("Image", "").downcase
-    ItemImage.new(attributes)
+  def parse_item_images(data)
+    return unless data.respond_to?(:ImageSets)
+
+    image_set = data.ImageSets.ImageSet
+    if image_set.kind_of?(Array)
+      image_set = image_set.find { |image_set| image_set.Category == 'primary' }
+      image_set ||= image_set.first
+    end
+
+    image_set.keys.select { |key| key =~ /.*Image/ }.inject(Hash.new) do |images, key|
+      image = create_item_image_from(image_set.send(key), key)
+      images[image.type] = image
+      images
+    end
   end
 
-  def append_if_exists(attributes, key, node, path, apply_method = nil)
-    node.xpath(path).tap do |nodes|
-      if nodes.first
-        value = nodes.first.content
-        value = value.send(apply_method) if apply_method
-        attributes[key] = (value.respond_to?(:strip) ? value.strip : value)
-      end
-    end
+  def create_item_image_from(item_data, type)
+    attributes = {}
+    attributes[:url] = item_data.URL
+    attributes[:height] = item_data.Height.to_i
+    attributes[:width] = item_data.Width.to_i
+    attributes[:type] = type.gsub("Image", "").downcase
+    ItemImage.new(attributes)
   end
 end

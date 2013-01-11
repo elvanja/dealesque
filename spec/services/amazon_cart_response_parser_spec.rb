@@ -14,7 +14,7 @@ describe AmazonCartResponseParser do
     end
 
     context "with cart" do
-      let (:cart) { subject.parse(response) }
+      let(:cart) { subject.parse(response) }
 
       it "has relevant data" do
         expect(cart.id).to eq("180-0911026-2735701")

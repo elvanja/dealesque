@@ -2,10 +2,10 @@ require 'spec_helper_without_rails'
 
 describe AmazonSearchResponseParser do
   context "when parsing" do
-    let(:response) { OpenStruct.new(body: File.read("spec/fixtures/amazon_api_responses/search_response.xml")) }
+    let(:response) { OpenStruct.new(body: File.read("spec/fixtures/amazon_api_responses/search_response_multiple_items.xml")) }
 
     it "returns search result" do
-      expect(subject.parse(stub.as_null_object)).to be_a_kind_of(SearchResult)
+      expect(subject.parse(response)).to be_a_kind_of(SearchResult)
     end
 
     it "minds not the namespace" do
@@ -23,8 +23,8 @@ describe AmazonSearchResponseParser do
           expect(subject.parse(response).items.size).to eq(9)
         end
 
-        context "with item" do
-          let (:item) { subject.parse(response).items.first }
+        context "with regular item" do
+          let(:item) { subject.parse(response).items.first }
 
           it "has relevant data" do
             expect(item.id).to eq("0321721330")
@@ -38,13 +38,36 @@ describe AmazonSearchResponseParser do
           end
 
           context "with image" do
-            let (:image) { item.images[:swatch] }
+            let(:image) { item.images[:swatch] }
 
             it "has relevant data" do
               expect(image.url).to eq("http://ecx.images-amazon.com/images/I/51vkmxCfmRL._SL30_.jpg")
               expect(image.height).to eq(30)
               expect(image.width).to eq(23)
               expect(image.type).to eq(:swatch)
+            end
+          end
+        end
+
+        context "with item without images" do
+          context "with image" do
+            let(:response) { OpenStruct.new(body: File.read("spec/fixtures/amazon_api_responses/search_response_single_item_without_images.xml")) }
+            let(:item) { subject.parse(response).items.first }
+
+            it "has relevant data" do
+              expect(item.images.size).to eq(0)
+            end
+          end
+        end
+
+        context "with item with multiple images" do
+          context "with image" do
+            let(:response) { OpenStruct.new(body: File.read("spec/fixtures/amazon_api_responses/search_response_single_item_with_multiple_image_sets.xml")) }
+            let(:item) { subject.parse(response).items.first }
+            let(:image) { item.images[:swatch] }
+
+            it "has relevant data" do
+              expect(image.url).to match(/.*41IDuwJXFCL.*/)
             end
           end
         end
