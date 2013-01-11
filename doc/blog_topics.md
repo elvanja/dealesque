@@ -5,6 +5,7 @@ Crack / Hashie vs Nokogiri, performance and code style
   Nokogiri: 1.18, 1.26, 1.27, 1.33, 1.23
   Crack & Hashie: 7.06, 7.87, 7.56, 7.58, 7.44
 
+Structure of app, new folders (services, values, ... even lib) and how to autoload them in Rails and specs
 Vacuum vs ASIN gems for accessing Amazon Product Advertising API - cover search and add to Cart
 Parsing XML and JSON with the same Roar representer
 XML parsing Roar limitations
