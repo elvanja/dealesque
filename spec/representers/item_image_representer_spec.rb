@@ -2,7 +2,7 @@ require 'spec_helper_without_rails'
 
 describe ItemImageRepresenter do
   context "when representing" do
-    let (:item_image) { ItemImage.new(url: "http://amazon", height: 100, width: 50, type: :small) }
+    let(:item_image) { ItemImage.new(url: "http://amazon", height: 100, width: 50, type: :small) }
 
     context "to JSON" do
       it "represents properties" do

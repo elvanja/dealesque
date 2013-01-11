@@ -2,7 +2,7 @@ require 'spec_helper_without_rails'
 
 describe ItemRepresenter do
   context "when representing" do
-    let (:item) { Item.new(id: "A123456", title: "Ulysses", url: "http://amazon", group: "Books", images: {small: ItemImage.new, large: ItemImage.new}) }
+    let(:item) { Item.new(id: "A123456", title: "Ulysses", url: "http://amazon", group: "Books", images: {small: ItemImage.new, large: ItemImage.new}) }
 
     context "to JSON" do
       it "represents properties" do
