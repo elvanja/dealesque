@@ -22,3 +22,7 @@ Should work for Amazon logged in users and logged out too
   e.g. how Amazon builds item links https://affiliate-program.amazon.com/gp/associates/network/main.html
 * test other libraries
   especially amazon-ecs
+* use https://github.com/JoshCheek/surrogate for rspec
+  replace real mocked/stubbed collaborating classes for surrogates
+  it retains contract but decouples from collaborating classes
+  (making changes doesn't force you to change collaborators as well)

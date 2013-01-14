@@ -1,10 +1,6 @@
-Crack / Hashie vs Nokogiri, performance and code style
-  * [crack](https://github.com/jnunemaker/crack)
-  * [hashie](https://github.com/intridea/hashie)
-  Test results parsing Amazon response with 9 items in 100 consecutive runs
-  Nokogiri: 1.18, 1.26, 1.27, 1.33, 1.23
-  Crack & Hashie: 7.06, 7.87, 7.56, 7.58, 7.44
-
+Hardcoding Class name
+  * Ruby Rogues Parley topic
+  * Hexagonal - I guess it's OK when injecting from outside in (SearchResponse parser)
 Structure of app, new folders (services, values, ... even lib) and how to autoload them in Rails and specs
 Vacuum vs ASIN gems for accessing Amazon Product Advertising API - cover search and add to Cart
 Parsing XML and JSON with the same Roar representer
@@ -25,3 +21,4 @@ Published
 In memory session store for Rails 3
 Deploying Rails with Twitter Bootstrap on Heroku
 Amazon API integration tests with VCR - how to circumvent the request signing (timestamp, etc.)
+Nokogiri vs Crack & Hashie, code style and performance
