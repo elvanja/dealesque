@@ -1,9 +1,8 @@
 require 'roar/representer'
 require 'roar/representer/json'
-require 'roar/representer/json/hal'
 
 module ItemImageRepresenter
-  include Roar::Representer::JSON::HAL
+  include Roar::Representer::JSON
 
   property :url
   property :height
