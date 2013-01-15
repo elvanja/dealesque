@@ -21,7 +21,7 @@ end
 
 def get_credentials_from_file
   credentials = {}
-  file = "config/amazon.yml"
+  file = 'config/amazon.yml'
   if File.exists?(file)
     credentials = YAML::load(File.open(file))[Rails.env]
     errors = validate_credentials(credentials, file)

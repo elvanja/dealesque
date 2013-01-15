@@ -1,3 +1,12 @@
+# Test other Amazon API libraries
+
+Especially amazon-ecs
+https://github.com/hakanensari/vacuum/
+https://github.com/phoet/asin/
+https://github.com/jugend/amazon-ecs/
+http://www.caliban.org/ruby/ruby-aws/
+https://github.com/christianhellsten/amazon-json-api
+
 # Digital content items issue
 
 See if there is a wey to add kindle books to cart

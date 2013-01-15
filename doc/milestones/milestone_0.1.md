@@ -18,8 +18,7 @@ Should work for Amazon logged in users and logged out too
 
 ## TODO
 
-* test other libraries
-  especially amazon-ecs
+* Rails 4 compliance
 * use https://github.com/JoshCheek/surrogate for rspec
   replace real mocked/stubbed collaborating classes for surrogates
   it retains contract but decouples from collaborating classes

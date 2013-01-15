@@ -21,5 +21,8 @@
 # Amazon credentials
 amazon.yml
 
+# Secret token
+secret_token.yml
+
 # VCR cassettes
 spec/fixtures/vcr_cassettes

@@ -4,4 +4,15 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Dealesque::Application.config.secret_token = 'd3504b4ae63f1ad2d8bb18094faa9907df854efa7178ee8f588fa14826a1cd18958f4c3cdfaf2cc9e1a2c8d671ee9789b07ff13e88b25234adcbc0465cb6b4bd'
+
+class ConfigurationError < StandardError; end
+
+secret_token_file = 'config/secret_token.yml'
+secret_token = ENV['SECRET_TOKEN']
+unless secret_token
+  secret_token = YAML::load(File.open(secret_token_file))[Rails.env]['token'] if File.exists?(secret_token_file)
+end
+
+raise ConfigurationError.new("Could not load secret token from environment or #{File.expand_path(secret_token_file)}") unless secret_token
+
+Dealesque::Application.config.secret_token = secret_token
