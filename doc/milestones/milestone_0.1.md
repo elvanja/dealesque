@@ -18,8 +18,6 @@ Should work for Amazon logged in users and logged out too
 
 ## TODO
 
-* see if there is a wey to add kindle books to cart
-  e.g. how Amazon builds item links https://affiliate-program.amazon.com/gp/associates/network/main.html
 * test other libraries
   especially amazon-ecs
 * use https://github.com/JoshCheek/surrogate for rspec

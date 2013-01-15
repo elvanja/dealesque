@@ -1,3 +1,9 @@
+# Digital content items issue
+
+See if there is a wey to add kindle books to cart
+Amazon builds item links that support this, but API doesn't
+See https://affiliate-program.amazon.com/gp/associates/network/main.html
+
 # Best offer
 
 Let user pick a specific offer for an item (sticky)
