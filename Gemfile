@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.9'
+gem 'rails', '3.2.11'
 gem 'jquery-rails'
 gem 'haml-rails'
 gem 'dalli'
@@ -8,8 +8,6 @@ gem 'thin'
 
 # Amazon Product Advertising API support
 gem 'vacuum'
-gem 'crack'
-gem 'hashie'
 gem 'roar'
 gem 'roar-rails'
 gem 'virtus'
@@ -29,6 +27,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-given'
   gem 'json_spec'
+  gem 'vcr'
 end
 
 group :development do
@@ -39,6 +38,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
+  gem 'sextant'
 end
 
 # To use ActiveModel has_secure_password

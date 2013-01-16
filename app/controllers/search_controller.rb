@@ -3,8 +3,7 @@ class SearchController < ApplicationController
   end
 
   def search
-    provider = Vacuum.new.tap { |provider| provider.configure(AMAZON_CREDENTIALS) }
-    search = SearchAmazon.new(AmazonService.new(provider))
+    search = SearchAmazon.new(AmazonClient.new(AMAZON_CREDENTIALS))
     @search_result = search.with_keywords(params[:search_terms])
   end
 end

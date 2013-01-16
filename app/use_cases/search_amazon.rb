@@ -1,10 +1,10 @@
 class SearchAmazon
-  def initialize(amazon_service)
-    raise ArgumentError unless amazon_service
-    @amazon_service = amazon_service
+  def initialize(amazon_client)
+    raise ArgumentError unless amazon_client
+    @amazon_client = amazon_client
   end
 
   def with_keywords(keywords)
-    @amazon_service.search_with_keywords(keywords)
+    @amazon_client.search_with_keywords(keywords)
   end
 end

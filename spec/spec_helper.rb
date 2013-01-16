@@ -7,10 +7,16 @@ require 'rspec/autorun'
 # other dependencies
 require 'ostruct'
 require 'rspec/given'
+require 'vcr'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
+  c.hook_into :excon # Vacuum uses it
+end
 
 RSpec.configure do |config|
   # ## Mock Framework

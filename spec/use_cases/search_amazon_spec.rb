@@ -2,11 +2,11 @@ require 'spec_helper_without_rails'
 
 describe SearchAmazon do
   context "when searching by keywords" do
-    let(:amazon_service) { AmazonService.new(stub) }
-    let(:subject) { SearchAmazon.new(amazon_service) }
+    let(:amazon_client) { AmazonClient.new(stub.as_null_object) }
+    let(:subject) { SearchAmazon.new(amazon_client) }
 
     it "delegates to amazon service" do
-      amazon_service.should_receive(:search_with_keywords).with("Ulysses")
+      amazon_client.should_receive(:search_with_keywords).with("Ulysses")
       subject.with_keywords("Ulysses")
     end
   end

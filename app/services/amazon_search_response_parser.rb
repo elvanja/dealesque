@@ -1,58 +1,58 @@
 require 'nokogiri'
 
 class AmazonSearchResponseParser
+  include AmazonParser
+
   def parse(response)
     root = Nokogiri::XML(response.body).remove_namespaces!
 
     attributes = {}
-    append_search_terms_from(root, attributes)
-    append_items(root, attributes)
+    attributes[:search_terms] = parse_search_terms(root)
+    attributes[:items] = parse_items(root)
 
     SearchResult.new(attributes)
   end
 
   private
 
-  def append_search_terms_from(root, attributes)
-    append_if_exists(attributes, :search_terms, root, '//OperationRequest/Arguments/Argument[@Name="Keywords"]/@Value')
+  def parse_search_terms(node)
+    parse_value(node, '//OperationRequest/Arguments/Argument[@Name="Keywords"]/@Value')
   end
 
-  def append_items(root, attributes)
-    attributes[:items] = root.xpath('//Items/Item').map do |node|
-      create_item_from(node)
+  def parse_items(node)
+    node.xpath('//Items/Item').map do |item_node|
+      create_item_from(item_node)
     end
   end
 
   def create_item_from(node)
     attributes = {}
-    append_if_exists(attributes, :id, node, './ASIN')
-    append_if_exists(attributes, :title, node, './ItemAttributes/Title')
-    append_if_exists(attributes, :url, node, './DetailPageURL')
-    append_if_exists(attributes, :group, node, './ItemAttributes/ProductGroup')
-    attributes[:images] = node.xpath('./ImageSets/ImageSet[@Category="primary"]/*').inject(Hash.new) do |images, image_node|
+    attributes[:id] = parse_value(node, './ASIN')
+    attributes[:title] = parse_value(node, './ItemAttributes/Title')
+    attributes[:url] = parse_value(node, './DetailPageURL')
+    attributes[:group] = parse_value(node, './ItemAttributes/ProductGroup')
+    attributes[:images] = parse_item_images(node)
+    Item.new(attributes)
+  end
+
+  def parse_item_images(node)
+    image_sets = node.xpath('./ImageSets/ImageSet')
+    return if image_sets.children.size == 0
+
+    image_set = image_sets.find {|image_set| image_set.attribute('Category').value == 'primary'} || image_sets.first
+    image_set.xpath('./*').inject(Hash.new) do |images, image_node|
       image = create_item_image_from(image_node)
       images[image.type] = image
       images
     end
-    Item.new(attributes)
   end
 
   def create_item_image_from(node)
     attributes = {}
-    append_if_exists(attributes, :url, node, './URL')
-    append_if_exists(attributes, :height, node, './Height', :to_i)
-    append_if_exists(attributes, :width, node, './Width', :to_i)
+    attributes[:url] = parse_value(node, './URL')
+    attributes[:height] = parse_value(node, './Height', :to_i)
+    attributes[:width] = parse_value(node, './Width', :to_i)
     attributes[:type] = node.name.gsub("Image", "").downcase
     ItemImage.new(attributes)
-  end
-
-  def append_if_exists(attributes, key, node, path, apply_method = nil)
-    node.xpath(path).tap do |nodes|
-      if nodes.first
-        value = nodes.first.content
-        value = value.send(apply_method) if apply_method
-        attributes[key] = (value.respond_to?(:strip) ? value.strip : value)
-      end
-    end
   end
 end

@@ -2,15 +2,15 @@ Dealesque::Application.routes.draw do
 
   # TODO see if there is a better way to route search
   # http://blog.jamesalmond.com/resourceful-routing-with-rails/
-  match 'search' => 'search#new'
-  match 'do_search' => 'search#search'
+  get 'search' => 'search#new'
+  post 'do_search' => 'search#search'
 
-  match 'picked' => 'picked_items#index'
-  match 'pick_item' => 'picked_items#pick'
-  match 'unpick_item' => 'picked_items#unpick'
-  match 'clear_picked' => 'picked_items#clear'
+  get 'picked' => 'picked_items#index'
+  put 'pick_item' => 'picked_items#pick'
+  delete 'unpick_item' => 'picked_items#unpick'
+  delete 'clear_picked' => 'picked_items#clear'
 
-  match 'create_cart' => 'cart#create'
+  get 'create_cart' => 'cart#create' # needs to be get because it redirects to Amazon cart url
 
   root to: 'search#new'
 
