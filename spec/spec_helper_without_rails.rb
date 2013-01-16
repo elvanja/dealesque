@@ -3,6 +3,7 @@ require 'simplecov'
 require 'simplecov-rcov'
 
 # other dependencies
+require 'vacuum'
 require 'yaml'
 require 'ostruct'
 require 'rspec/given'

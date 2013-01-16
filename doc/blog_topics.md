@@ -1,3 +1,6 @@
+Secrets & Heroku
+  Amazon credentials and secret token, describe how to load from environment or yaml
+  http://biggestfool.tumblr.com/post/24049554541/reminder-secret-token-rb-is-named-so-for-a-reason
 Hardcoding Class name
   * Ruby Rogues Parley topic
   * Hexagonal - I guess it's OK when injecting from outside in (SearchResponse parser)

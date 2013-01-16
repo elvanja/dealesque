@@ -1,8 +1,7 @@
 require 'spec_helper_without_rails'
 
-describe AmazonService do
-  let(:provider) { stub }
-  let(:subject) { AmazonService.new(provider) }
+describe AmazonClient do
+  let(:subject) { AmazonClient.new(stub.as_null_object) }
 
   context "when searching" do
     context "with keywords" do
@@ -15,7 +14,7 @@ describe AmazonService do
 
       it "propagates keywords to provider" do
         AmazonSearchResponseParser.any_instance.should_receive(:parse)
-        provider.should_receive(:get).with({query: params})
+        subject.provider.should_receive(:get).with({query: params})
         subject.search_with_keywords('Odysseus')
       end
     end
@@ -33,14 +32,26 @@ describe AmazonService do
 
     it "invokes cart creating on provider" do
       AmazonCartResponseParser.any_instance.should_receive(:parse)
-      provider.should_receive(:get).with({query: params})
+      subject.provider.should_receive(:get).with({query: params})
       subject.create_cart_with(picked_items)
     end
   end
 
   context "when initializing" do
-    it "requires provider" do
-      expect { AmazonService.new(nil) }.to raise_error(ArgumentError)
+    it "requires credentials" do
+      expect { AmazonClient.new(nil) }.to raise_error(AmazonClientConfigurationError)
+    end
+
+    it "requires Amazon key" do
+      expect { AmazonClient.new({"secret" => "secret", "tag" => "tag"}) }.to raise_error(AmazonClientConfigurationError)
+    end
+
+    it "requires Amazon secret" do
+      expect { AmazonClient.new({"key" => "key", "tag" => "tag"}) }.to raise_error(AmazonClientConfigurationError)
+    end
+
+    it "requires Amazon tag" do
+      expect { AmazonClient.new({"key" => "key", "secret" => "secret"}) }.to raise_error(AmazonClientConfigurationError)
     end
   end
 end

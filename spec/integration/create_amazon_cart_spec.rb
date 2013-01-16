@@ -3,7 +3,6 @@ require 'vacuum'
 
 describe "create amazon cart golden path" do
   let(:credentials) { YAML::load(File.open("config/amazon.yml"))["test"] }
-  let(:provider) { Vacuum.new.tap { |provider| provider.configure(credentials) } }
 
   let(:cart_matcher) {
     lambda do |new_request, saved_request|
@@ -14,7 +13,7 @@ describe "create amazon cart golden path" do
   }
 
   it "adds the items to cart" do
-    service = AmazonService.new(provider)
+    service = AmazonClient.new(credentials)
     create_cart = CreateAmazonCart.new(service)
     picked_items = PickedItems.new
     picked_items.add(Item.new(id: '0321721330'))

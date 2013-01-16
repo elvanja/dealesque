@@ -3,7 +3,6 @@ require 'vacuum'
 
 describe "search by keywords golden path" do
   let(:credentials) { YAML::load(File.open("config/amazon.yml"))["test"] }
-  let(:provider) { Vacuum.new.tap { |provider| provider.configure(credentials) } }
 
   let(:search_matcher) {
     lambda do |new_request, saved_request|
@@ -14,7 +13,7 @@ describe "search by keywords golden path" do
   }
 
   it "returns the desired items" do
-    service = AmazonService.new(provider)
+    service = AmazonClient.new(credentials)
     search = SearchAmazon.new(service)
     VCR.use_cassette("search_by_keywords_returns_the_desired_items", match_requests_on: [:method, search_matcher]) do
       result = search.with_keywords("Practical Object-Oriented Design in Ruby")
