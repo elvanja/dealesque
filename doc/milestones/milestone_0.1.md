@@ -15,12 +15,3 @@ Picked items should be persisted throughout the session
 Enable putting picked items in Amazon cart
 Items in cart shold get Dealesue affiliate ID
 Should work for Amazon logged in users and logged out too
-
-## TODO
-
-* Rails 4 compliance
-  http://rubysource.com/get-your-app-ready-for-rails-4/
-* use https://github.com/JoshCheek/surrogate for rspec
-  replace real mocked/stubbed collaborating classes for surrogates
-  it retains contract but decouples from collaborating classes
-  (making changes doesn't force you to change collaborators as well)
