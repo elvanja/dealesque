@@ -13,6 +13,8 @@ it retains contract but decouples from collaborating classes
 
 # TODO Rspec-Given
 
+http://rubysource.com/rspec-given/
+
 # TODO Rails 4 compliance
 
 http://rubysource.com/get-your-app-ready-for-rails-4/
