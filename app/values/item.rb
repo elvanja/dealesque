@@ -5,7 +5,7 @@ class Item
   attr_reader :images
 
   def initialize(attributes = {})
-    raise ArgumentError unless attributes
+    raise ArgumentError.new("Missing attributes") unless attributes
 
     {id: "", title: "", url: "", group: "", images: {}}.each do |property, default_value|
       send("#{property}=", attributes[property] || default_value)

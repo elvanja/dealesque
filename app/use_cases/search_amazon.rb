@@ -1,6 +1,6 @@
 class SearchAmazon
   def initialize(amazon_client)
-    raise ArgumentError unless amazon_client
+    raise ArgumentError.new("Missing Amazon client") unless amazon_client
     @amazon_client = amazon_client
   end
 
