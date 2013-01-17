@@ -1,25 +1,25 @@
-# App version
+# TODO App version
 
 Tags for releases or hot-fixes should do, no need to enter it manually
 Display version somewhere on site
 http://stackoverflow.com/questions/11199553/where-to-define-rails-apps-version-number
 
-# Surrogate
+# TODO Surrogate
 
 https://github.com/JoshCheek/surrogate
 replace real mocked/stubbed collaborating classes for surrogates
 it retains contract but decouples from collaborating classes
 (making changes doesn't force you to change collaborators as well)
 
-# Rspec-Given
+# TODO Rspec-Given
 
-# Rails 4 compliance
+# TODO Rails 4 compliance
 
 http://rubysource.com/get-your-app-ready-for-rails-4/
 Enable threadsafe, dalli or caching
 Turbolinks / pjax for milestone 0.3
 
-# Test other Amazon API libraries
+# TODO Test other Amazon API libraries
 
 Especially amazon-ecs
 https://github.com/hakanensari/vacuum/
@@ -28,7 +28,16 @@ https://github.com/jugend/amazon-ecs/
 http://www.caliban.org/ruby/ruby-aws/
 https://github.com/christianhellsten/amazon-json-api
 
-# Session storage in production
+# TODO Apply benchmarking gem instead of manually calculating average
+
+Related to Nokogiri vs Crack & Hashie
+http://gistflow.com/posts/136-benchmarking-with-ruby
+
+# TODO Benchmark Roar transformations with extend and with direct class inclusion
+
+http://tonyarcieri.com/dci-in-ruby-is-completely-broken
+
+# TODO Session storage in production
 
 Needed for picked items storage
 
