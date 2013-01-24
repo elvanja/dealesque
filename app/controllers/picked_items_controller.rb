@@ -29,8 +29,9 @@ class PickedItemsController < ApplicationController
 
   private
 
+  # TODO this is used in CartController too, try to merge
   def retrieve_picked_items_from_session
-    create_new_picked_items
+    @picked_items = PickedItems.new.extend(PickedItemsRepresenter)
     @picked_items.from_json(session[:picked_items]) if session[:picked_items]
   end
 
@@ -42,9 +43,5 @@ class PickedItemsController < ApplicationController
     item = Item.new.extend(ItemRepresenter).from_json(params[:item])
     yield item if block_given?
     item
-  end
-
-  def create_new_picked_items
-    @picked_items = PickedItems.new.extend(PickedItemsRepresenter)
   end
 end
