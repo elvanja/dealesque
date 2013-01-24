@@ -27,15 +27,15 @@ class AmazonClient
       params["Item.#{index}.ASIN"] = item.id.to_s
       params["Item.#{index}.Quantity"] = 1.to_s
     end
-    AmazonCartResponseParser.new.parse(call(params))
+    call(params)
   end
 
   def search_with_keywords(keywords)
-    AmazonSearchResponseParser.new.parse(
-      call  'Operation' => 'ItemSearch',
-            'SearchIndex' => 'All',
-            'ResponseGroup' => 'ItemAttributes,Offers,Images',
-            'Keywords' => keywords
+    call(
+        'Operation' => 'ItemSearch',
+        'SearchIndex' => 'All',
+        'ResponseGroup' => 'ItemAttributes,Offers,Images',
+        'Keywords' => keywords
     )
   end
 

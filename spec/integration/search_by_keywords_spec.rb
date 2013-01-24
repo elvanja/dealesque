@@ -13,8 +13,8 @@ describe "search by keywords golden path" do
   }
 
   it "returns the desired items" do
-    service = AmazonClient.new(credentials)
-    search = SearchAmazon.new(service)
+    client = AmazonClient.new(credentials)
+    search = SearchAmazon.new(client, AmazonSearchResponseParser.new)
     VCR.use_cassette("search_by_keywords_returns_the_desired_items", match_requests_on: [:method, search_matcher]) do
       result = search.with_keywords("Practical Object-Oriented Design in Ruby")
       expect(result).to be_a(SearchResult)

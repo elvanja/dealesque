@@ -1,3 +1,7 @@
+# TODO Mutating code coverage
+
+http://solnic.eu/2013/01/23/mutation-testing-with-mutant.html
+
 # TODO App version
 
 Tags for releases or hot-fixes should do, no need to enter it manually

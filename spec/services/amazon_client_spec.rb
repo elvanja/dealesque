@@ -12,8 +12,7 @@ describe AmazonClient do
           'Keywords' => 'Odysseus'
       }}
 
-      it "propagates keywords to provider" do
-        AmazonSearchResponseParser.any_instance.should_receive(:parse)
+      it "invokes search by keywords on provider" do
         subject.provider.should_receive(:get).with({query: params})
         subject.search_with_keywords('Odysseus')
       end
@@ -31,7 +30,6 @@ describe AmazonClient do
     }}
 
     it "invokes cart creating on provider" do
-      AmazonCartResponseParser.any_instance.should_receive(:parse)
       subject.provider.should_receive(:get).with({query: params})
       subject.create_cart_with(picked_items)
     end

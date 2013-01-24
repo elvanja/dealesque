@@ -13,8 +13,8 @@ describe "create amazon cart golden path" do
   }
 
   it "adds the items to cart" do
-    service = AmazonClient.new(credentials)
-    create_cart = CreateAmazonCart.new(service)
+    client = AmazonClient.new(credentials)
+    create_cart = CreateAmazonCart.new(client, AmazonCartResponseParser.new)
     picked_items = PickedItems.new
     picked_items.add(Item.new(id: '0321721330'))
     picked_items.add(Item.new(id: 'B008VHMWMI'))
