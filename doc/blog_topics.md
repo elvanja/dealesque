@@ -1,10 +1,38 @@
-# TODO Secrets & Heroku
-  Amazon credentials and secret token, describe how to load from environment or yaml
-  http://biggestfool.tumblr.com/post/24049554541/reminder-secret-token-rb-is-named-so-for-a-reason
+# TODO Evolution of design
+
+Take a use case, like SearchAmazon and how it evolved:
+* first was the use case with stubbed amazon client
+* then amazon client with stubbed parser
+* then parser with manually recorded response
+* then integration test with vcr recorded response
+* the amazon client has some pain points
+  * hard coded reference to AmazonSearchResponseParser
+  * testing due to above issue
+  tried injecting dependency to AmazonSearchResponseParser in client but it didn't feel right
+  decided to go with the current version
+* and finally controller that uses all of it
+* in a dream, "inverse dependencies" hit me
+  so I yanked AmazonSearchResponseParser out of client and injected it into SearchAmazon use case
+* tests became simpler
+* and the ceremony / verbosity moved to use case and it's usage, but that was OK
+
+This actually enabled plans to implement parser selection as in Avdi's book instead of directly injecting it.
+Show all the steps and why and how they happened, from use case that defined all other players etc.
+A solid test bed enabled refactoring with a safety net.
+See next topic for reference!
 
 # TODO Hardcoding Class name
   * Ruby Rogues Parley topic
   * Hexagonal - I guess it's OK when injecting from outside in (SearchResponse parser)
+
+# TODO Resources in a separate page
+
+Take all Dealesque and other links and organize them in a page
+Maybe as a gist or even a github repo so it can be forked and updated
+
+# TODO Secrets & Heroku
+  Amazon credentials and secret token, describe how to load from environment or yaml
+  http://biggestfool.tumblr.com/post/24049554541/reminder-secret-token-rb-is-named-so-for-a-reason
 
 # TODO Structure of app, new folders (services, values, ... even lib) and how to autoload them in Rails and specs
 
