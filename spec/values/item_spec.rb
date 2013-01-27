@@ -1,8 +1,19 @@
 require 'spec_helper_without_rails'
 
+class MockOfferWithItem
+  Surrogate.endow self
+  define_accessor(:item)
+end
+
+describe MockOfferWithItem do
+  it "is a subset of Offer" do
+    expect(Offer).to substitute_for(MockOfferWithItem, subset: true)
+  end
+end
+
 describe Item do
   context "with attributes" do
-    %w{id title url group images}.each do |property|
+    %w{id title url group images offers}.each do |property|
       it "has #{property}" do
         expect(subject).to respond_to(property)
         expect(subject).to respond_to("#{property}=")
@@ -14,6 +25,14 @@ describe Item do
 
       it "coerces keys to symbol" do
         expect(subject.images.keys).to eq([:small])
+      end
+    end
+
+    context "with offers" do
+      let(:subject) { item = Item.new; item.offers = [MockOfferWithItem.new]; item }
+
+      it "sets offer item to self" do
+        expect(subject.offers.first.item).to eq(subject)
       end
     end
   end

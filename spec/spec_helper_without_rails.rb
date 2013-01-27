@@ -9,6 +9,7 @@ require 'ostruct'
 require 'rspec/given'
 require 'json_spec'
 require 'vcr'
+require 'surrogate/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -38,7 +39,8 @@ RSpec.configure do |config|
   # disable should syntax, it wil become obsolete in future RSpec releases
   # http://myronmars.to/n/dev-blog/2012/06/rspecs-new-expectation-syntax
   config.expect_with :rspec do |c|
-    c.syntax = :expect
+    # don't force yet, surrogate gem requires the older syntax
+    #c.syntax = :expect
   end
 
   # Run specs in random order to surface order dependencies. If you find an

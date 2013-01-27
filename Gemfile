@@ -28,6 +28,7 @@ group :development, :test do
   gem 'rspec-given'
   gem 'json_spec'
   gem 'vcr'
+  gem 'surrogate'
 end
 
 group :development do

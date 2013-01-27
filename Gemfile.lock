@@ -166,6 +166,7 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    surrogate (0.7.0)
     test_xml (0.1.2)
       nokogiri (>= 1.3.2)
     therubyracer (0.11.2)
@@ -218,6 +219,7 @@ DEPENDENCIES
   sextant
   simplecov
   simplecov-rcov
+  surrogate
   therubyracer
   thin
   twitter-bootstrap-rails
