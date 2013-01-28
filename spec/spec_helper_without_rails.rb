@@ -40,7 +40,7 @@ RSpec.configure do |config|
   # http://myronmars.to/n/dev-blog/2012/06/rspecs-new-expectation-syntax
   config.expect_with :rspec do |c|
     # don't force yet, surrogate gem requires the older syntax
-    #c.syntax = :expect
+    c.syntax = [:should, :expect] # :expect
   end
 
   # Run specs in random order to surface order dependencies. If you find an

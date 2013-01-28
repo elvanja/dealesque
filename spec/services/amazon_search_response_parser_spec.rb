@@ -49,6 +49,36 @@ describe AmazonSearchResponseParser do
           end
         end
 
+        context "with item with offers" do
+          let(:response) { OpenStruct.new(body: File.read("spec/fixtures/amazon_api_responses/search_response_single_item_with_multiple_image_sets.xml")) }
+          let(:item) { subject.parse(response).items.first }
+
+          it "has all the offers" do
+            expect(item.offers.size).to eq(2)
+          end
+
+          context "with offer" do
+            let(:offer) { item.offers.first }
+
+            it "has relevant data" do
+              expect(offer.merchant).to eq("the_book_depository_")
+              expect(offer.condition).to eq(Condition::NEW)
+              expect(offer.price).to eq(27.81)
+              expect(offer.currency).to eq("USD")
+              expect(offer.formatted_price).to eq("$27.81")
+            end
+          end
+        end
+
+        context "with item without offers" do
+          let(:response) { OpenStruct.new(body: File.read("spec/fixtures/amazon_api_responses/search_response_single_item_without_offers.xml")) }
+          let(:item) { subject.parse(response).items.first }
+
+          it "doesn't throw an exception" do
+            expect(item.offers.size).to eq(0)
+          end
+        end
+
         context "with item without images" do
           context "with image" do
             let(:response) { OpenStruct.new(body: File.read("spec/fixtures/amazon_api_responses/search_response_single_item_without_images.xml")) }

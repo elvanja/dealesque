@@ -57,7 +57,7 @@ describe Item do
     end
 
     context "with defaults" do
-      {id: "", title: "", url: "", group: "", images: {}}.each do |property, default_value|
+      {id: "", title: "", url: "", group: "", images: {}, offers: []}.each do |property, default_value|
         it "has defaults #{property} to '#{default_value}'" do
           expect(subject.public_send(property)).to eq(default_value)
         end
