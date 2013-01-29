@@ -44,8 +44,7 @@ class PickedItemsController < ApplicationController
   end
 
   def get_item_from_params
-    item = Item.new.extend(ItemRepresenter)
-    item.from_json(params[:item])
+    item = Item.new.extend(ItemRepresenter).from_json(params[:item])
     yield item if block_given?
     item
   end

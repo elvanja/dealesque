@@ -11,6 +11,6 @@ module ItemRepresenter
   property :title
   property :url
   property :group
-  hash :images, extend: ItemImageRepresenter, class: ItemImage
-  collection :offers, extend: OfferRepresenter, class: Offer
+  hash :images, class: ItemImage, extend: ItemImageRepresenter
+  collection :offers, class: Offer, extend: OfferRepresenter
 end
