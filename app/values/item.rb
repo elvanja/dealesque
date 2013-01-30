@@ -1,13 +1,13 @@
 class Item
   include Comparable
 
-  attr_accessor :id, :title, :url, :group
+  attr_accessor :id, :title, :url, :group, :list_price
   attr_reader :images, :offers
 
   def initialize(attributes = {})
     raise ArgumentError.new("Missing attributes") unless attributes
 
-    {id: "", title: "", url: "", group: "", images: {}, offers: []}.each do |property, default_value|
+    {id: "", title: "", url: "", group: "", list_price: Price::NOT_AVAILABLE, images: {}, offers: []}.each do |property, default_value|
       send("#{property}=", attributes[property] || default_value)
     end
 

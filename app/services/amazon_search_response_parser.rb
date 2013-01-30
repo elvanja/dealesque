@@ -31,6 +31,7 @@ class AmazonSearchResponseParser
     attributes[:title] = parse_value(node, './ItemAttributes/Title')
     attributes[:url] = parse_value(node, './DetailPageURL')
     attributes[:group] = parse_value(node, './ItemAttributes/ProductGroup')
+    attributes[:list_price] = create_price_from(node.xpath('./ItemAttributes/ListPrice').first)
     attributes[:images] = parse_item_images(node)
     attributes[:offers] = parse_item_offers(node)
     Item.new(attributes)
@@ -67,9 +68,16 @@ class AmazonSearchResponseParser
     attributes = {}
     attributes[:merchant] = parse_value(node, './Merchant')
     attributes[:condition] = Condition.from(parse_value(node, './OfferAttributes/Condition'))
-    attributes[:price] = parse_value(node, './OfferListing/Price/Amount', :to_i) / 100.0
-    attributes[:currency] = parse_value(node, './OfferListing/Price/CurrencyCode')
-    attributes[:formatted_price] = parse_value(node, './OfferListing/Price/FormattedPrice')
+    attributes[:price] = create_price_from(node.xpath('./OfferListing/Price').first)
     Offer.new(attributes)
+  end
+
+  def create_price_from(node)
+    return unless node
+    attributes = {}
+    attributes[:amount] = parse_value(node, './Amount', :to_i) / 100.0
+    attributes[:currency] = parse_value(node, './CurrencyCode')
+    attributes[:formatted] = parse_value(node, './FormattedPrice')
+    Price.new(attributes)
   end
 end

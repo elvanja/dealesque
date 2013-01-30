@@ -13,7 +13,7 @@ end
 
 describe Item do
   context "with attributes" do
-    %w{id title url group images offers}.each do |property|
+    %w{id title url group list_price images offers}.each do |property|
       it "has #{property}" do
         expect(subject).to respond_to(property)
         expect(subject).to respond_to("#{property}=")
@@ -57,7 +57,7 @@ describe Item do
     end
 
     context "with defaults" do
-      {id: "", title: "", url: "", group: "", images: {}, offers: []}.each do |property, default_value|
+      {id: "", title: "", url: "", group: "", list_price: Price::NOT_AVAILABLE, images: {}, offers: []}.each do |property, default_value|
         it "has defaults #{property} to '#{default_value}'" do
           expect(subject.public_send(property)).to eq(default_value)
         end
@@ -71,7 +71,7 @@ describe Item do
     end
 
     context "with supplied attributes" do
-      let(:attributes) { {id: 1, title: "Shoulda coulda woulda", url: "http://some.url", group: "book", images: {}} }
+      let(:attributes) { {id: 1, title: "Shoulda coulda woulda", url: "http://some.url", group: "book", list_price: Price.new, images: {}, offers: []} }
       let(:subject) { Item.new(attributes) }
 
       it "fills up from supplied attributes" do

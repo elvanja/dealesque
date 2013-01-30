@@ -18,7 +18,12 @@ describe "search by keywords golden path" do
     VCR.use_cassette("search_by_keywords_returns_the_desired_items", match_requests_on: [:method, search_matcher]) do
       result = search.with_keywords("Practical Object-Oriented Design in Ruby")
       expect(result).to be_a(SearchResult)
-      expect(result.items.first.title).to eq("Practical Object-Oriented Design in Ruby: An Agile Primer (Addison-Wesley Professional Ruby Series)")
+
+      item = result.items.first
+      expect(item.title).to eq("Practical Object-Oriented Design in Ruby: An Agile Primer (Addison-Wesley Professional Ruby Series)")
+      expect(item.list_price.amount).to eq(39.99)
+      expect(item.images.size).to eq(6)
+      expect(item.offers.size).to eq(1)
     end
   end
 end

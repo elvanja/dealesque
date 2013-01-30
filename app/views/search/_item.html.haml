@@ -3,7 +3,12 @@
     %table.table-condensed
       %tr
         %td= image_tag item.images[:thumbnail].try(:url) || image_path("hot_plate.jpg")
-        %td.span2= item.title
+        %td.span2
+          %table.table-condensed
+            %tr
+              %td.span2= link_to item.title, item.url, {target: '_blank'}
+            %tr
+              %td= item.list_price.formatted
     .caption
       = form_tag pick_item_path, method: :put do
         = hidden_field_tag :item, item.extend(ItemRepresenter).to_json
