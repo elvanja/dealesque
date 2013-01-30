@@ -52,6 +52,7 @@ describe ItemRepresenter do
         item = Item.new.extend(subject).from_json(json)
         expect(item.offers.size).to eq(2)
         expect(item.offers.first).to be_a_kind_of(Offer)
+        expect(item.offers.first.item).to eq(item)
       end
     end
   end
