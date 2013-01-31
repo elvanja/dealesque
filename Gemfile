@@ -8,6 +8,7 @@ gem 'thin'
 
 # Amazon Product Advertising API support
 gem 'vacuum'
+gem 'representable', :git => "../representable_fix"
 gem 'roar'
 gem 'roar-rails'
 gem 'virtus'

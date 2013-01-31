@@ -1,9 +1,9 @@
 require 'roar/representer'
 require 'roar/representer/json'
 
-require_relative 'item_image_representer'
-require_relative 'offer_representer'
 require_relative 'price_representer'
+require_relative 'offer_representer'
+require_relative 'item_image_representer'
 
 module ItemRepresenter
   include Roar::Representer::JSON
