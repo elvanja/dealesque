@@ -34,7 +34,7 @@ require_clean_work_tree
 echo "creating deploy branch"
 git checkout -b deploy_to_heroku
 echo "package gems"
-bundle package -all
+bundle package --all
 echo "commiting packaged gems"
 git add -A .
 git commit -m "added packaged gems"
