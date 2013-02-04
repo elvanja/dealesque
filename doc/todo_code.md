@@ -1,3 +1,7 @@
+# TODO Implement controllers to be testable
+
+Use gem at https://github.com/xaviershay/poniard
+
 # TODO View consolidation and presentation
 
 https://github.com/sentientmonkey/presenter-example/blob/master/lib/presenter.rb

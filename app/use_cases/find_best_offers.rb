@@ -3,7 +3,7 @@ class FindBestOffers
     raise ArgumentError.new("Missing picked items") unless picked_items
 
     picked_items.map do |picked_item|
-      picked_item.offers.min {|a, b| a.price <=> b.price}
+      picked_item.offers.min {|a, b| a.price.amount <=> b.price.amount}
     end
   end
 end

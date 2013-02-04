@@ -14,7 +14,11 @@ end
 
 class MockOfferWithPrice
   Surrogate.endow self
-  define(:initialize) { |args| @price = args[:price] }
+  define(:initialize) { |args|
+    @merchant = args[:merchant]
+    @price = args[:price]
+  }
+  define_reader(:merchant)
   define_reader(:price)
 end
 
@@ -24,16 +28,38 @@ describe MockOfferWithPrice do
   end
 end
 
+class MockPrice
+  Surrogate.endow self
+  define(:initialize) { |args| @amount = args[:amount] }
+  define_reader(:amount)
+end
+
+describe MockPrice do
+  it "is a subset of Price" do
+    expect(Price).to substitute_for(MockPrice, subset: true)
+  end
+end
+
 describe FindBestOffers do
+  def create_item(offers_data)
+    MockItemWithOffers.new(offers: offers_data.collect { |offer_data|
+      MockOfferWithPrice.new(merchant: offer_data[:merchant] || 'not important', price: offer_data[:price])
+    })
+  end
+
+  def item_with_offer_data(offers_data)
+    create_item(offers_data.collect { |offer_data|
+      {merchant: offer_data[:merchant] || 'not important', price: MockPrice.new(amount: offer_data[:amount])}
+    })
+  end
+
+  def item_with_offers_amounts(amounts)
+    item_with_offer_data(amounts.collect {|amount| {amount: amount}})
+  end
+
   context "when searching for best offers" do
     context "with a single picked item" do
-      let(:item) {
-        MockItemWithOffers.new(offers: [
-            MockOfferWithPrice.new(price: 50),
-            MockOfferWithPrice.new(price: 20),
-            MockOfferWithPrice.new(price: 30)
-        ])
-      }
+      let(:item) { item_with_offers_amounts([50, 20, 30]) }
 
       let(:picked_items) {
         PickedItems.new.tap do |picked_items|
@@ -48,7 +74,37 @@ describe FindBestOffers do
 
       it "returns minimum offer for the item" do
         best_offer = subject.for_picked_items(picked_items).first
-        expect(best_offer.price).to eq(20)
+        expect(best_offer.price.amount).to eq(20)
+      end
+    end
+
+    context "when taking only prices into account" do
+      let(:picked_items) {
+        PickedItems.new.tap do |picked_items|
+          picked_items.add(item_with_offers_amounts([21, 11, 31]))
+          picked_items.add(item_with_offers_amounts([10, 20, 30]))
+          picked_items.add(item_with_offers_amounts([22, 32, 12]))
+        end
+      }
+
+      it "returns minimum offers for all items" do
+        best_offers = subject.for_picked_items(picked_items)
+        expect(best_offers.collect {|offer| offer.price.amount}).to match_array([10, 11, 12])
+      end
+    end
+
+    context "when taking merchants into account" do
+      let(:picked_items) {
+        PickedItems.new.tap do |picked_items|
+          picked_items.add(item_with_offer_data([{merchant: "amazon", amount: 21}, {merchant: "amazon", amount: 11}, {merchant: "amazon", amount: 31}]))
+          picked_items.add(item_with_offer_data([{merchant: "amazon", amount: 10}, {merchant: "amazon", amount: 20}, {merchant: "amazon", amount: 30}]))
+          picked_items.add(item_with_offer_data([{merchant: "amazon", amount: 22}, {merchant: "amazon", amount: 32}, {merchant: "amazon", amount: 12}]))
+        end
+      }
+
+      it "returns minimum offers for all items" do
+        best_offers = subject.for_picked_items(picked_items)
+        expect(best_offers.collect {|offer| offer.price.amount}).to match_array([10, 11, 12])
       end
     end
 
