@@ -93,18 +93,19 @@ describe FindBestOffers do
       end
     end
 
-    context "when taking merchants into account" do
+    context "when there is a single cheapest merchant for all items" do
       let(:picked_items) {
         PickedItems.new.tap do |picked_items|
-          picked_items.add(item_with_offer_data([{merchant: "amazon", amount: 21}, {merchant: "amazon", amount: 11}, {merchant: "amazon", amount: 31}]))
-          picked_items.add(item_with_offer_data([{merchant: "amazon", amount: 10}, {merchant: "amazon", amount: 20}, {merchant: "amazon", amount: 30}]))
-          picked_items.add(item_with_offer_data([{merchant: "amazon", amount: 22}, {merchant: "amazon", amount: 32}, {merchant: "amazon", amount: 12}]))
+          picked_items.add(item_with_offer_data([{merchant: "ebay", amount: 21}, {merchant: "amazon", amount: 11}, {merchant: "target", amount: 31}]))
+          picked_items.add(item_with_offer_data([{merchant: "ebay", amount: 10}, {merchant: "amazon", amount: 30}, {merchant: "target", amount: 50}]))
+          picked_items.add(item_with_offer_data([{merchant: "ebay", amount: 22}, {merchant: "amazon", amount: 32}, {merchant: "target", amount: 12}]))
         end
       }
 
       it "returns minimum offers for all items" do
         best_offers = subject.for_picked_items(picked_items)
-        expect(best_offers.collect {|offer| offer.price.amount}).to match_array([10, 11, 12])
+        expect(best_offers.collect {|offer| offer.merchant}.uniq).to match_array(["ebay"])
+        expect(best_offers.collect {|offer| offer.price.amount}).to match_array([21, 10, 22])
       end
     end
 
