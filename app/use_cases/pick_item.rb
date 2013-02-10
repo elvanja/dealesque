@@ -6,7 +6,7 @@ class PickItem
   alias_method :pick, :add
 
   def initialize(picked_items_container)
-    raise ArgumentError unless picked_items_container
+    raise ArgumentError.new("Missing picked items container") unless picked_items_container
     @picked_items_container = picked_items_container
   end
 end

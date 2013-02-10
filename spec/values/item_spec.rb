@@ -1,8 +1,19 @@
 require 'spec_helper_without_rails'
 
+class MockOfferWithItem
+  Surrogate.endow self
+  define_accessor(:item)
+end
+
+describe MockOfferWithItem do
+  it "is a subset of Offer" do
+    expect(Offer).to substitute_for(MockOfferWithItem, subset: true)
+  end
+end
+
 describe Item do
   context "with attributes" do
-    %w{id title url group images}.each do |property|
+    %w{id title url group list_price images offers}.each do |property|
       it "has #{property}" do
         expect(subject).to respond_to(property)
         expect(subject).to respond_to("#{property}=")
@@ -14,6 +25,14 @@ describe Item do
 
       it "coerces keys to symbol" do
         expect(subject.images.keys).to eq([:small])
+      end
+    end
+
+    context "with offers" do
+      let(:subject) { item = Item.new; item.offers = [MockOfferWithItem.new]; item }
+
+      it "sets offer item to self" do
+        expect(subject.offers.first.item).to eq(subject)
       end
     end
   end
@@ -38,7 +57,7 @@ describe Item do
     end
 
     context "with defaults" do
-      {id: "", title: "", url: "", group: "", images: {}}.each do |property, default_value|
+      {id: "", title: "", url: "", group: "", list_price: Price::NOT_AVAILABLE, images: {}, offers: []}.each do |property, default_value|
         it "has defaults #{property} to '#{default_value}'" do
           expect(subject.public_send(property)).to eq(default_value)
         end
@@ -52,7 +71,7 @@ describe Item do
     end
 
     context "with supplied attributes" do
-      let(:attributes) { {id: 1, title: "Shoulda coulda woulda", url: "http://some.url", group: "book", images: {}} }
+      let(:attributes) { {id: 1, title: "Shoulda coulda woulda", url: "http://some.url", group: "book", list_price: Price.new, images: {}, offers: []} }
       let(:subject) { Item.new(attributes) }
 
       it "fills up from supplied attributes" do

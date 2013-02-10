@@ -33,6 +33,12 @@ describe AmazonSearchResponseParser do
             expect(item.group).to eq("Book")
           end
 
+          it "has list price" do
+            expect(item.list_price.amount).to eq(39.99)
+            expect(item.list_price.currency).to eq("USD")
+            expect(item.list_price.formatted).to eq("$39.99")
+          end
+
           it "has all the images" do
             expect(item.images.size).to eq(6)
           end
@@ -46,6 +52,44 @@ describe AmazonSearchResponseParser do
               expect(image.width).to eq(23)
               expect(image.type).to eq(:swatch)
             end
+          end
+        end
+
+        context "with item with offers" do
+          let(:response) { OpenStruct.new(body: File.read("spec/fixtures/amazon_api_responses/search_response_single_item_with_multiple_image_sets.xml")) }
+          let(:item) { subject.parse(response).items.first }
+
+          it "has all the offers" do
+            expect(item.offers.size).to eq(2)
+          end
+
+          context "with offer" do
+            let(:offer) { item.offers.first }
+
+            it "has relevant data" do
+              expect(offer.merchant).to eq("the_book_depository_")
+              expect(offer.condition).to eq(Condition::NEW)
+              expect(offer.price).to be_a_kind_of(Price)
+            end
+
+            context "with price" do
+              let(:price) { offer.price }
+
+              it "has relevant data" do
+                expect(price.amount).to eq(27.81)
+                expect(price.currency).to eq("USD")
+                expect(price.formatted).to eq("$27.81")
+              end
+            end
+          end
+        end
+
+        context "with item without offers" do
+          let(:response) { OpenStruct.new(body: File.read("spec/fixtures/amazon_api_responses/search_response_single_item_without_offers.xml")) }
+          let(:item) { subject.parse(response).items.first }
+
+          it "doesn't throw an exception" do
+            expect(item.offers.size).to eq(0)
           end
         end
 

@@ -3,7 +3,7 @@ require 'yaml'
 def get_credentials_from_environment
   {
       "key" => ENV['AMAZON_KEY'],
-      "secret" => ENV['AMAZON_SECERET'],
+      "secret" => ENV['AMAZON_SECRET'],
       "tag" => ENV['AMAZON_TAG']
   }
 end

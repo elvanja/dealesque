@@ -1,3 +1,13 @@
+# TODO Implement controllers to be testable
+
+Use gem at https://github.com/xaviershay/poniard
+
+# TODO View consolidation and presentation
+
+https://github.com/sentientmonkey/presenter-example/blob/master/lib/presenter.rb
+https://github.com/sentientmonkey/presenter-example/blob/master/app/models/user_registration.rb
+https://github.com/zendesk/curly-templates
+
 # TODO Mutating code coverage
 
 http://solnic.eu/2013/01/23/mutation-testing-with-mutant.html

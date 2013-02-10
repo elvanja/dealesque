@@ -2,7 +2,7 @@ require 'forwardable'
 
 class PickedItems
   extend Forwardable
-  def_delegators :@items, :size, :include?, :delete, :empty?, :each, :each_with_index
+  def_delegators :@items, :size, :include?, :delete, :empty?, :each, :each_with_index, :map, :collect
   alias_method :remove, :delete
   attr_accessor :items # needed for roar
 

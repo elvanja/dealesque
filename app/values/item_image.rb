@@ -3,7 +3,7 @@ class ItemImage
   attr_reader :type
 
   def initialize(attributes = {})
-    raise ArgumentError unless attributes
+    raise ArgumentError.new("Missing attributes") unless attributes
 
     {url: "", height: 0, width: 0, type: :undefined}.each do |property, default_value|
       send("#{property}=", attributes[property] || default_value)

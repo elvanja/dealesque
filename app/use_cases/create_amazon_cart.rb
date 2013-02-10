@@ -1,6 +1,7 @@
 class CreateAmazonCart
   def initialize(amazon_client, amazon_cart_response_parser)
-    raise ArgumentError unless amazon_client && amazon_cart_response_parser
+    raise ArgumentError.new("Missing Amazon Client") unless amazon_client
+    raise ArgumentError.new("Missing Amazon Cart Response Parser") unless amazon_cart_response_parser
     @amazon_client = amazon_client
     @amazon_cart_response_parser = amazon_cart_response_parser
   end

@@ -11,7 +11,11 @@ class CartController < ApplicationController
 
   # TODO this is used in PickedItemsController too, try to merge
   def retrieve_picked_items_from_session
-    @picked_items = PickedItems.new.extend(PickedItemsRepresenter)
+    create_empty_picked_items
     @picked_items.from_json(session[:picked_items]) if session[:picked_items]
+  end
+
+  def create_empty_picked_items
+    @picked_items = PickedItems.new.extend(PickedItemsRepresenter)
   end
 end

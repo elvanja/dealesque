@@ -22,7 +22,7 @@ class PickedItemsController < ApplicationController
   end
 
   def clear
-    create_new_picked_items
+    create_empty_picked_items
     flash[:notice] = "Meh, I'll just pick my nose instead..."
     redirect_to search_path
   end
@@ -31,8 +31,12 @@ class PickedItemsController < ApplicationController
 
   # TODO this is used in CartController too, try to merge
   def retrieve_picked_items_from_session
-    @picked_items = PickedItems.new.extend(PickedItemsRepresenter)
+    create_empty_picked_items
     @picked_items.from_json(session[:picked_items]) if session[:picked_items]
+  end
+
+  def create_empty_picked_items
+    @picked_items = PickedItems.new.extend(PickedItemsRepresenter)
   end
 
   def store_picked_items_to_session
