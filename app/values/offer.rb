@@ -1,4 +1,5 @@
 class Offer
+  # TODO Condition should be enum
   attr_accessor :price, :merchant, :condition, :item
 
   def initialize(attributes = {})

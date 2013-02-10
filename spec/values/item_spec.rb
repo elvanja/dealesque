@@ -13,7 +13,7 @@ end
 
 describe Item do
   context "with attributes" do
-    %w{id title url group list_price images offers}.each do |property|
+    %w{id title url group list_price images offers more_offers_url}.each do |property|
       it "has #{property}" do
         expect(subject).to respond_to(property)
         expect(subject).to respond_to("#{property}=")
@@ -33,6 +33,19 @@ describe Item do
 
       it "sets offer item to self" do
         expect(subject.offers.first.item).to eq(subject)
+      end
+
+      context "when appending offers" do
+        let(:offer_to_append) { MockOfferWithItem.new }
+
+        it "appends to existing offers" do
+          subject.append_offers([offer_to_append])
+          expect(subject.offers.size).to eq(2)
+        end
+        it "does not duplicate offers" do
+          10.times { subject.append_offers([offer_to_append]) }
+          pending #expect(subject.offers.size).to eq(2)
+        end
       end
     end
   end
@@ -57,7 +70,7 @@ describe Item do
     end
 
     context "with defaults" do
-      {id: "", title: "", url: "", group: "", list_price: Price::NOT_AVAILABLE, images: {}, offers: []}.each do |property, default_value|
+      {id: "", title: "", url: "", group: "", list_price: Price::NOT_AVAILABLE, images: {}, offers: [], more_offers_url: ""}.each do |property, default_value|
         it "has defaults #{property} to '#{default_value}'" do
           expect(subject.public_send(property)).to eq(default_value)
         end
@@ -71,7 +84,7 @@ describe Item do
     end
 
     context "with supplied attributes" do
-      let(:attributes) { {id: 1, title: "Shoulda coulda woulda", url: "http://some.url", group: "book", list_price: Price.new, images: {}, offers: []} }
+      let(:attributes) { {id: 1, title: "Shoulda coulda woulda", url: "http://some.url", group: "book", list_price: Price.new, images: {}, offers: [], more_offers_url: "http://more_offers.url"} }
       let(:subject) { Item.new(attributes) }
 
       it "fills up from supplied attributes" do

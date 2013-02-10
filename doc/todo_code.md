@@ -1,3 +1,8 @@
+# TODO Price => Money
+
+Use Money to be more smart about showing prices in selected currency
+https://github.com/RubyMoney/money
+
 # TODO Implement controllers to be testable
 
 Use gem at https://github.com/xaviershay/poniard
