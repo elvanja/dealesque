@@ -42,9 +42,15 @@ describe Item do
           subject.append_offers([offer_to_append])
           expect(subject.offers.size).to eq(2)
         end
+
+        it "appended offers reference item" do
+          subject.append_offers([offer_to_append])
+          expect(offer_to_append.item).to eq(subject)
+        end
+
         it "does not duplicate offers" do
           10.times { subject.append_offers([offer_to_append]) }
-          pending #expect(subject.offers.size).to eq(2)
+          expect(subject.offers.size).to eq(2)
         end
       end
     end

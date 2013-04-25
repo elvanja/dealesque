@@ -23,6 +23,10 @@ Tags for releases or hot-fixes should do, no need to enter it manually
 Display version somewhere on site
 http://stackoverflow.com/questions/11199553/where-to-define-rails-apps-version-number
 
+# TODO Paratrooper for Heroku deployments
+
+http://blog.hashrocket.com/posts/when-pushing-just-isn-t-getting-the-job-done
+
 # TODO Surrogate
 
 https://github.com/JoshCheek/surrogate

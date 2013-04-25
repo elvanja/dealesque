@@ -8,10 +8,11 @@ gem 'thin'
 
 # Amazon Product Advertising API support
 gem 'vacuum'
-gem 'representable', :git => "../representable_fix"
+gem 'representable' #, :git => "../representable_fix"
 gem 'roar'
 gem 'roar-rails'
 gem 'virtus'
+gem 'mechanize'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -30,6 +31,9 @@ group :development, :test do
   gem 'json_spec'
   gem 'vcr'
   gem 'surrogate'
+  gem 'faraday'
+  gem 'excon'
+  gem 'webmock'
 end
 
 group :development do

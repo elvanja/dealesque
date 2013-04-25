@@ -30,10 +30,6 @@ See next topic for reference!
 Take all Dealesque and other links and organize them in a page
 Maybe as a gist or even a github repo so it can be forked and updated
 
-# TODO Secrets & Heroku
-  Amazon credentials and secret token, describe how to load from environment or yaml
-  http://biggestfool.tumblr.com/post/24049554541/reminder-secret-token-rb-is-named-so-for-a-reason
-
 # TODO Structure of app, new folders (services, values, ... even lib) and how to autoload them in Rails and specs
 
 # TODO Vacuum vs ASIN gems for accessing Amazon Product Advertising API - cover search and add to Cart
@@ -69,3 +65,4 @@ In memory session store for Rails 3
 Deploying Rails with Twitter Bootstrap on Heroku
 Amazon API integration tests with VCR - how to circumvent the request signing (timestamp, etc.)
 Nokogiri vs Crack & Hashie, code style and performance
+Rails Secret

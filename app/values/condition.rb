@@ -55,7 +55,7 @@ class Condition
 
   class << self
     def from(value)
-      condition = all.find { |condition| condition.value.to_s.downcase == value.to_s.downcase }
+      condition = all.find { |condition| value.to_s.downcase =~ /#{condition.value.to_s.downcase}/ }
       raise ArgumentError.new("Condition '#{value.to_s.downcase}' is not recognized") unless condition
       condition.value
     end

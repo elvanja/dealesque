@@ -24,11 +24,12 @@ class Item
   end
 
   def offers=(offers)
-    @offers = offers.each { |offer| offer.item = self }
+    @offers = offers.each { |offer| offer.item = self }.uniq
   end
 
   def append_offers(offers)
-    @offers += offers
+    @offers += offers.each { |offer| offer.item = self }
+    @offers.uniq!
   end
 
   private

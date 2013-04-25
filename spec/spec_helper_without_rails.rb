@@ -32,7 +32,9 @@ end
 
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
-  c.hook_into :excon # Vacuum uses it
+  # https://relishapp.com/vcr/vcr/docs/configuration/hook-into
+  c.hook_into :excon, :faraday, :webmock # Vacuum uses Excon, Mechanize Net::Http
+  c.allow_http_connections_when_no_cassette = true
 end
 
 RSpec.configure do |config|

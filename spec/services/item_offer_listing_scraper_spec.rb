@@ -18,7 +18,11 @@ describe ItemOfferListingScraper do
 
     it "scrapes offers" do
       VCR.use_cassette("scrap_all_item_offers") do
-        pending
+        offers = subject.scrape_offers_for(item)
+        offers.each do |offer|
+          puts offer.inspect
+        end
+        expect(offers.size).to eq(15)
       end
     end
   end
