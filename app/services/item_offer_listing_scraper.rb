@@ -1,5 +1,6 @@
 require 'nokogiri'
 require 'mechanize'
+require 'money'
 
 class ItemOfferListingScraper
   include AmazonParser
@@ -34,9 +35,10 @@ class ItemOfferListingScraper
   def create_price_from(node)
     return unless node
     attributes = {}
-    #attributes[:amount] = parse_value(node, './Amount', :to_i) / 100.0
-    #attributes[:currency] = parse_value(node, './CurrencyCode')
-    #attributes[:formatted] = parse_value(node, './FormattedPrice')
+    Money.assume_from_symbol = true
+    price = Money.parse(node.content)
+    attributes[:amount] = price.amount
+    attributes[:currency] = price.currency_as_string
     attributes[:formatted] = node.content
     Price.new(attributes)
   end

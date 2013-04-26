@@ -15,14 +15,29 @@ end
 describe ItemOfferListingScraper do
   context "when scraping for item offers" do
     let(:item) { MockItemWithMoreOffersUrl.new(more_offers_url: "http://www.amazon.com/gp/offer-listing/0321584104%3FSubscriptionId%3DAKIAIAPIAMDJ5EGZIPJQ%26tag%3Ddealesque-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D386001%26creativeASIN%3D0321584104") }
-
-    it "scrapes offers" do
+    let(:offers) {
       VCR.use_cassette("scrap_all_item_offers") do
-        expect(subject.scrape_offers_for(item).size).to eq(15)
+        subject.scrape_offers_for(item)
       end
-    end
-  end
+    }
 
-  context "when initializing" do
+    it "scrapes all available offers" do
+      expect(offers.size).to eq(15)
+    end
+
+    it "scrapes merchant" do
+      expect(offers.first.merchant).to eq("goodwillofwct")
+    end
+
+    it "scrapes condition" do
+      expect(offers.first.condition).to eq(:used)
+    end
+
+    it "scrapes prices" do
+      price = offers.first.price
+      expect(price.amount).to eq(21.23)
+      expect(price.currency).to eq("USD")
+      expect(price.formatted).to eq("$21.23")
+    end
   end
 end

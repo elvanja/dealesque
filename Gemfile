@@ -13,6 +13,7 @@ gem 'roar'
 gem 'roar-rails'
 gem 'virtus'
 gem 'mechanize'
+gem 'money'
 
 # Gems used only for assets and not required
 # in production environments by default.
