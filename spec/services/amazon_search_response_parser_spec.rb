@@ -67,6 +67,7 @@ describe AmazonSearchResponseParser do
             let(:offer) { item.offers.first }
 
             it "has relevant data" do
+              expect(offer.id).to eq("eVSHRf84ueoEiikvJwVLKoFpLZpOchpeOuNNiOV%2BdX4m3lAYdIoKaR3TN5CQCUlj%2Bwlk17WfeqG6kRZAlog42awsgwvsA699WpogVV7wuk3a3IYXEUop5YUxpyRj73te0pdKbOpNfNeFlUufvi6BlA%3D%3D")
               expect(offer.merchant).to eq("the_book_depository_")
               expect(offer.condition).to eq(Condition::NEW)
               expect(offer.price).to be_a_kind_of(Price)

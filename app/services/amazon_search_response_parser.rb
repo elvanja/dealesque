@@ -66,6 +66,7 @@ class AmazonSearchResponseParser
 
   def create_item_offer_from(node)
     attributes = {}
+    attributes[:id] = parse_value(node, './OfferListing/OfferListingId')
     attributes[:merchant] = parse_value(node, './Merchant')
     attributes[:condition] = Condition.from(parse_value(node, './OfferAttributes/Condition'))
     attributes[:price] = create_price_from(node.xpath('./OfferListing/Price').first)

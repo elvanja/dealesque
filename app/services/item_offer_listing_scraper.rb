@@ -26,6 +26,7 @@ class ItemOfferListingScraper
 
   def create_offer_from(node)
     attributes = {}
+    attributes[:id] = parse_value(node, './/form/input[@name = "offeringID.1"]/@value')
     attributes[:merchant] = parse_value(node, './/div[@class = "seller"]/a/b')
     attributes[:condition] = Condition.from(parse_value(node, './/div[@class = "condition"]').gsub("\n", " ").strip)
     attributes[:price] = create_price_from(node.xpath('.//span[@class = "price"]').first)

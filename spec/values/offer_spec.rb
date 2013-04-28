@@ -2,7 +2,7 @@ require 'spec_helper_without_rails'
 
 describe Offer do
   context "with attributes" do
-    %w{price merchant condition item}.each do |property|
+    %w{id price merchant condition item}.each do |property|
       it "has #{property}" do
         expect(subject).to respond_to(property)
         expect(subject).to respond_to("#{property}=")
@@ -18,7 +18,7 @@ describe Offer do
     end
 
     context "with supplied attributes" do
-      let(:attributes) { {price: Price.new, merchant: "Amazon", condition: Condition::NEW, item: Item.new} }
+      let(:attributes) { {id: 1, price: Price.new, merchant: "Amazon", condition: Condition::NEW, item: Item.new} }
       let(:subject) { Offer.new(attributes) }
 
       it "fills up from supplied attributes" do

@@ -25,6 +25,10 @@ describe ItemOfferListingScraper do
       expect(offers.size).to eq(15)
     end
 
+    it "scrapes id" do
+      expect(offers.first.id).to eq("gx9RUyr8erVDxRK0WfSmbZbH7kGHzYXWexfFhm40M%2BZVIPnC8670b%2BhqFrjF%2FufMap3xxfz1nfi%2FQ5HCKCSfv6y2upuLvVL6RxtiW7xuzNWAdHT3yUQ6YDF2Xqiw6Njj83qQL7FMevpmHKEm4M944g%3D%3D")
+    end
+
     it "scrapes merchant" do
       expect(offers.first.merchant).to eq("goodwillofwct")
     end
