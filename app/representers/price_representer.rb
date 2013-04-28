@@ -4,7 +4,6 @@ require 'roar/representer/json'
 module PriceRepresenter
   include Roar::Representer::JSON
 
-  property :amount
+  property :fractional
   property :currency
-  property :formatted
 end

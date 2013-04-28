@@ -10,6 +10,7 @@ If available, use the postage information too
 ## Put items in Amazon cart
 
 Put items with the computed offer / price / merchant
+Use OfferListingId for selected offer, instead of item ASIN / ID
 
 ## Browse Amazon items
 
