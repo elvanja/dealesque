@@ -27,18 +27,18 @@ end
 
 group :development, :test do
   gem 'therubyracer', :platforms => :ruby # https://devcenter.heroku.com/articles/rails3x-asset-pipeline-cedar
-  gem 'faraday'
-  gem 'excon'
 end
 
 group :test do
-  gem 'therubyracer', :platforms => :ruby # https://devcenter.heroku.com/articles/rails3x-asset-pipeline-cedar
   gem 'rspec-rails'
   gem 'rspec-given'
   gem 'json_spec'
-  gem 'vcr'
   gem 'surrogate'
-  gem 'webmock'
+  gem 'vcr'
+  gem 'jeff', '= 0.4.3'
+  gem 'excon'#, '<= 0.17.0'
+  gem 'faraday'
+  gem 'webmock', '<  1.10.0'
 end
 
 group :development do

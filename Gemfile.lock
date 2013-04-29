@@ -58,7 +58,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     eventmachine (1.0.3)
-    excon (0.20.1)
+    excon (0.16.10)
     execjs (1.4.0)
       multi_json (~> 1.0)
     faraday (0.8.7)
@@ -73,8 +73,8 @@ GEM
     hike (1.2.2)
     hooks (0.2.2)
     i18n (0.6.4)
-    jeff (0.6.1)
-      excon (~> 0.20.0)
+    jeff (0.4.3)
+      excon (~> 0.16.0)
     journey (1.0.4)
     jquery-rails (2.2.1)
       railties (>= 3.0, < 5.0)
@@ -142,15 +142,15 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.4)
-    representable (1.4.0)
+    representable (1.4.1)
       multi_json
       nokogiri
     roar (0.11.14)
       representable (>= 1.2.8)
-    roar-rails (0.0.13)
-      actionpack (~> 3.0)
+    roar-rails (0.0.14)
+      actionpack
       hooks
-      railties (~> 3.0)
+      railties (>= 3.0.0)
       representable (~> 1.4)
       roar (~> 0.10)
       test_xml
@@ -165,7 +165,7 @@ GEM
       rspec (>= 2.11)
       sorcerer (>= 0.3.7)
     rspec-mocks (2.13.1)
-    rspec-rails (2.13.0)
+    rspec-rails (2.13.1)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
@@ -218,13 +218,13 @@ GEM
     unf (0.1.1)
       unf_ext
     unf_ext (0.0.6)
-    vacuum (0.3.1)
-      jeff (~> 0.6.0)
+    vacuum (0.3.0)
+      jeff (~> 0.4.0)
     vcr (2.4.0)
     virtus (0.5.4)
       backports (~> 2.6.1)
       descendants_tracker (~> 0.0.1)
-    webmock (1.11.0)
+    webmock (1.9.3)
       addressable (>= 2.2.7)
       crack (>= 0.3.2)
     webrobots (0.1.1)
@@ -241,6 +241,7 @@ DEPENDENCIES
   excon
   faraday
   haml-rails
+  jeff (= 0.4.3)
   jquery-rails
   json_spec
   less-rails
@@ -265,4 +266,4 @@ DEPENDENCIES
   vacuum
   vcr
   virtus
-  webmock
+  webmock (< 1.10.0)
