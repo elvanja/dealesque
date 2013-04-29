@@ -8,7 +8,7 @@ gem 'thin'
 
 # Amazon Product Advertising API support
 gem 'vacuum'
-gem 'representable' #, :git => "../representable_fix"
+gem 'representable'
 gem 'roar'
 gem 'roar-rails'
 gem 'virtus'
@@ -35,10 +35,10 @@ group :test do
   gem 'json_spec'
   gem 'surrogate'
   gem 'vcr'
-  gem 'jeff', '= 0.4.3'
-  gem 'excon'#, '<= 0.17.0'
+  gem 'jeff', '= 0.4.3' # see excon gem details below
+  gem 'excon' # use older jeff gem, this will force older excon, the one supported by vcr
   gem 'faraday'
-  gem 'webmock', '<  1.10.0'
+  gem 'webmock', '<  1.10.0' # use this until vcr supports latest versions
 end
 
 group :development do
