@@ -12,6 +12,7 @@ module ItemRepresenter
   property :title
   property :url
   property :group
+  property :more_offers_url
   property :list_price, class: Price, extend: PriceRepresenter
   hash :images, class: ItemImage, extend: ItemImageRepresenter
   collection :offers, class: Offer, extend: OfferRepresenter

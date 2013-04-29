@@ -31,6 +31,7 @@ class AmazonSearchResponseParser
     attributes[:title] = parse_value(node, './ItemAttributes/Title')
     attributes[:url] = parse_value(node, './DetailPageURL')
     attributes[:group] = parse_value(node, './ItemAttributes/ProductGroup')
+    attributes[:more_offers_url] = parse_value(node, './Offers/MoreOffersUrl')
     attributes[:list_price] = create_price_from(node.xpath('./ItemAttributes/ListPrice').first)
     attributes[:images] = parse_item_images(node)
     attributes[:offers] = parse_item_offers(node)

@@ -3,7 +3,7 @@ require 'spec_helper_without_rails'
 describe ItemRepresenter do
   context "when representing" do
     let(:item) { Item.new(
-        id: "A123456", title: "Ulysses", url: "http://amazon", group: "Books",
+        id: "A123456", title: "Ulysses", url: "http://amazon", group: "Books", more_offers_url: "http://amazon/offers",
         list_price: Price.new,
         images: {small: ItemImage.new, large: ItemImage.new},
         offers: [Offer.new, Offer.new]
@@ -11,7 +11,7 @@ describe ItemRepresenter do
 
     context "to JSON" do
       it "represents properties" do
-        names = %({"id":"A123456","title":"Ulysses","url":"http://amazon","group":"Books"})
+        names = %({"id":"A123456","title":"Ulysses","url":"http://amazon","group":"Books","more_offers_url":"http://amazon/offers"})
         expect(item.extend(subject).to_json).to be_json_eql(names).excluding(:images).excluding(:offers).excluding(:list_price)
       end
 
@@ -37,7 +37,7 @@ describe ItemRepresenter do
 
   context "when consuming" do
     context "from JSON" do
-      let(:json) { %({"id":"A123456","title":"Ulysses","url":"http://amazon","group":"Books","list_price":{},"images":{"small":{},"large":{}},"offers":[{},{}]}) }
+      let(:json) { %({"id":"A123456","title":"Ulysses","url":"http://amazon","group":"Books","more_offers_url":"http://amazon/offers","list_price":{},"images":{"small":{},"large":{}},"offers":[{},{}]}) }
 
       it "consumes properties" do
         item = Item.new.extend(subject).from_json(json)
@@ -45,6 +45,7 @@ describe ItemRepresenter do
         expect(item.title).to eq("Ulysses")
         expect(item.url).to eq("http://amazon")
         expect(item.group).to eq("Books")
+        expect(item.more_offers_url).to eq("http://amazon/offers")
       end
 
       it "consumes list price" do
