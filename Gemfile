@@ -27,13 +27,17 @@ end
 
 group :development, :test do
   gem 'therubyracer', :platforms => :ruby # https://devcenter.heroku.com/articles/rails3x-asset-pipeline-cedar
+  gem 'faraday'
+  gem 'excon'
+end
+
+group :test do
+  gem 'therubyracer', :platforms => :ruby # https://devcenter.heroku.com/articles/rails3x-asset-pipeline-cedar
   gem 'rspec-rails'
   gem 'rspec-given'
   gem 'json_spec'
   gem 'vcr'
   gem 'surrogate'
-  gem 'faraday'
-  gem 'excon'
   gem 'webmock'
 end
 

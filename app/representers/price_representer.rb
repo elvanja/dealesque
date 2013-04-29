@@ -5,5 +5,5 @@ module PriceRepresenter
   include Roar::Representer::JSON
 
   property :fractional
-  property :currency
+  property :currency, getter: lambda { |opts| self.currency_as_string }
 end

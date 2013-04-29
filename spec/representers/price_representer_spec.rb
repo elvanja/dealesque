@@ -20,6 +20,7 @@ describe PriceRepresenter do
         offer = Price.new.extend(subject).from_json(json)
         expect(offer.fractional).to eq(1023)
         expect(offer.currency_as_string).to eq("USD")
+        expect(offer.symbol).to eq("$")
       end
     end
   end

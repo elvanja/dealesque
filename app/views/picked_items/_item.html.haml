@@ -10,7 +10,7 @@
             %tr
               %td.span2= link_to item.title, item.url, {target: '_blank'}
             %tr
-              %td= item.list_price.formatted
+              %td= item.list_price
     .caption
       = form_tag unpick_item_path, method: :delete do
         = hidden_field_tag :item, item.extend(ItemRepresenter).to_json
