@@ -6,7 +6,7 @@ describe OfferRepresenter do
 
     context "to JSON" do
       it "represents properties" do
-        names = %({"price":{},"merchant":"Amazon","condition":"used"})
+        names = %({"price":{"currency":"USD","fractional":0},"merchant":"Amazon","condition":"used"})
         expect(offer.extend(subject).to_json).to be_json_eql(names)
       end
     end

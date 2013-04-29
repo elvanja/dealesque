@@ -40,8 +40,8 @@ describe ItemOfferListingScraper do
     it "scrapes prices" do
       price = offers.first.price
       expect(price.amount).to eq(21.23)
-      expect(price.currency).to eq("USD")
-      expect(price.formatted).to eq("$21.23")
+      expect(price.currency.to_s).to eq("USD")
+      expect(price.to_s).to eq("$21.23")
     end
   end
 end

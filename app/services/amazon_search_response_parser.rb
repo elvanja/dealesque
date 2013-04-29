@@ -76,9 +76,8 @@ class AmazonSearchResponseParser
   def create_price_from(node)
     return unless node
     attributes = {}
-    attributes[:amount] = parse_value(node, './Amount', :to_i) / 100.0
+    attributes[:fractional] = parse_value(node, './Amount', :to_i)
     attributes[:currency] = parse_value(node, './CurrencyCode')
-    attributes[:formatted] = parse_value(node, './FormattedPrice')
     Price.new(attributes)
   end
 end

@@ -35,8 +35,8 @@ describe AmazonSearchResponseParser do
 
           it "has list price" do
             expect(item.list_price.amount).to eq(39.99)
-            expect(item.list_price.currency).to eq("USD")
-            expect(item.list_price.formatted).to eq("$39.99")
+            expect(item.list_price.currency.to_s).to eq("USD")
+            expect(item.list_price.to_s).to eq("$39.99")
           end
 
           it "has all the images" do
@@ -78,8 +78,8 @@ describe AmazonSearchResponseParser do
 
               it "has relevant data" do
                 expect(price.amount).to eq(27.81)
-                expect(price.currency).to eq("USD")
-                expect(price.formatted).to eq("$27.81")
+                expect(price.currency.to_s).to eq("USD")
+                expect(price.to_s).to eq("$27.81")
               end
             end
           end

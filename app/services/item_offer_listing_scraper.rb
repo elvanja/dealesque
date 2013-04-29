@@ -38,9 +38,8 @@ class ItemOfferListingScraper
     attributes = {}
     Money.assume_from_symbol = true
     price = Money.parse(node.content)
-    attributes[:amount] = price.amount
-    attributes[:currency] = price.currency_as_string
-    attributes[:formatted] = node.content
+    attributes[:fractional] = price.fractional
+    attributes[:currency] = price.currency
     Price.new(attributes)
   end
 end
