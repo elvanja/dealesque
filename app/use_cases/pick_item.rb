@@ -9,6 +9,7 @@ class PickItem
   end
 
   def pick(item)
+    # TODO scrape in background and add to item in callback (or in some other way), scraping is too slow for the user to wait
     item.append_offers(@item_offer_listing_scraper.scrape_offers_for(item))
     @picked_items_container.add(item)
   end
