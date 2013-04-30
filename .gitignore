@@ -26,3 +26,6 @@ secret_token.yml
 
 # VCR cassettes
 spec/fixtures/vcr_cassettes
+
+# binstubs
+bin
