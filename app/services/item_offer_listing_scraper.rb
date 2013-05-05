@@ -1,3 +1,4 @@
+require 'uri'
 require 'nokogiri'
 require 'mechanize'
 require 'money'
@@ -6,11 +7,16 @@ class ItemOfferListingScraper
   include AmazonParser
 
   def scrape_offers_for(item)
+    return [] unless valid_offers_url?(item.more_offers_url)
     root = Nokogiri::HTML(get_more_offers_page(item.more_offers_url))
     scrape_offers(root)
   end
 
   private
+
+  def valid_offers_url?(more_offers_url)
+    (more_offers_url =~ URI::regexp) != nil
+  end
 
   def get_more_offers_page(more_offers_url)
     agent = Mechanize.new { |agent| agent.user_agent_alias = 'Mac Safari' }

@@ -21,6 +21,11 @@ describe ItemOfferListingScraper do
       end
     }
 
+    it "returns empty array if invalid more offers url" do
+      item.stub(more_offers_url: "")
+      expect(offers).to eq([])
+    end
+
     it "scrapes all available offers" do
       expect(offers.size).to eq(15)
     end

@@ -22,7 +22,9 @@ Show smallest used price, if available
 ### When not computed
 
 Show Amazon list price
+Show Amazon real price, strike-through the list price in that case
 Show smallest used price, if available
+Show smallest new price, if available
 
 ### When computed
 
@@ -36,6 +38,7 @@ Group items by merchant (colorize)
   get all the data on search
   if considerably slowing things, do it on pick item or when calculating best offer
   TODO make sure no duplicate offers are created in the process
+* use new condition offer in case a merchant has both used and new and the price is the same
 * find shipping options and costs
   if nothing else, use web scraping
   take care to calculate correctly for amazon logged in and not logged in user
