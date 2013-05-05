@@ -3,6 +3,12 @@ require 'spec_helper_without_rails'
 class MockOfferWithItem
   Surrogate.endow self
   define_accessor(:item)
+  define_accessor(:condition)
+  define_accessor(:price)
+
+  def comparison_token
+    "#{price} #{condition}"
+  end
 end
 
 describe MockOfferWithItem do
@@ -29,10 +35,42 @@ describe Item do
     end
 
     context "with offers" do
-      let(:subject) { item = Item.new; item.offers = [MockOfferWithItem.new]; item }
+      let(:offer) { MockOfferWithItem.new }
+      let(:subject) { Item.new }
 
-      it "sets offer item to self" do
-        expect(subject.offers.first.item).to eq(subject)
+      context "when returning best offers" do
+        let(:subject) { item = Item.new; item.offers = [offer]; item }
+
+        it "has best offer per condition" do
+          offer.should_receive(:condition).and_return(Condition::NEW)
+          expect(subject.best_offer(Condition::NEW)).to eq(offer)
+        end
+
+        it "filters best offer by condition" do
+          offer.should_receive(:condition).and_return(Condition::USED)
+          expect(subject.best_offer(Condition::NEW)).to eq(nil)
+        end
+      end
+
+      context "when declaring" do
+        it "sets offer item to self" do
+          subject.offers = [offer]
+          expect(subject.offers.first.item).to eq(subject)
+        end
+
+        it "does not duplicate offers" do
+          subject.offers = [offer, offer, offer]
+          expect(subject.offers.size).to eq(1)
+        end
+
+        it "sorts offers by price" do
+          cheaper = MockOfferWithItem.new
+          cheaper.price = 10
+          expensive = MockOfferWithItem.new
+          expensive.price = 20
+          subject.offers = [expensive, cheaper]
+          expect(subject.offers.map(&:price).first).to eq(10)
+        end
       end
 
       context "when appending offers" do
@@ -40,7 +78,7 @@ describe Item do
 
         it "appends to existing offers" do
           subject.append_offers([offer_to_append])
-          expect(subject.offers.size).to eq(2)
+          expect(subject.offers.size).to eq(1)
         end
 
         it "appended offers reference item" do
@@ -50,15 +88,24 @@ describe Item do
 
         it "does not duplicate offers" do
           10.times { subject.append_offers([offer_to_append]) }
-          expect(subject.offers.size).to eq(2)
+          expect(subject.offers.size).to eq(1)
+        end
+
+        it "sorts offers by price" do
+          cheaper = MockOfferWithItem.new
+          cheaper.price = 10
+          expensive = MockOfferWithItem.new
+          expensive.price = 20
+          subject.offers = [expensive, cheaper]
+          expect(subject.offers.map(&:price).first).to eq(10)
         end
       end
     end
   end
 
   context "when comparing" do
-    let(:first) { Item.new(id: "A123456")}
-    let(:second) { Item.new(id: "A123456")}
+    let(:first) { Item.new(id: "A123456") }
+    let(:second) { Item.new(id: "A123456") }
 
     it "compares items with the same ID as the same" do
       expect(first == second).to eq(true)

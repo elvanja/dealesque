@@ -2,8 +2,10 @@ require 'forwardable'
 require 'money'
 
 class Price
+  include Comparable
+
   extend Forwardable
-  def_delegators :@money, :fractional, :amount, :currency, :currency_as_string, :to_f, :to_d, :symbol
+  def_delegators :@money, :fractional, :amount, :currency, :currency_as_string, :to_f, :to_d, :symbol, :<=>, :to_money
 
   def initialize(attributes = {})
     raise ArgumentError.new("Missing attributes") unless attributes
@@ -26,7 +28,7 @@ class Price
   private
 
   def create_money(fractional, currency)
-    @money = currency ? Money.new(fractional, currency) : Money.new(fractional)
+    @money = (currency ? Money.new(fractional, currency) : Money.new(fractional))
   end
 end
 

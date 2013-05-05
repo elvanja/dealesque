@@ -1,7 +1,7 @@
 require 'roar/representer'
 require 'roar/representer/json'
 
-module PriceRepresenter
+class PriceRepresenter < Representable::Decorator
   include Roar::Representer::JSON
 
   property :fractional

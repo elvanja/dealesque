@@ -7,7 +7,7 @@ describe ItemImageRepresenter do
     context "to JSON" do
       it "represents properties" do
         names = %({"url":"http://amazon","height":100,"width":50,"type":"small"})
-        expect(item_image.extend(subject).to_json).to be_json_eql(names)
+        expect(ItemImageRepresenter.new(item_image).to_json).to be_json_eql(names)
       end
     end
   end
@@ -17,7 +17,8 @@ describe ItemImageRepresenter do
       let(:json) { %({"url":"http://amazon","height":100,"width":50,"type":"small"}) }
 
       it "consumes properties" do
-        item_image = ItemImage.new.extend(subject).from_json(json)
+        item_image = ItemImage.new
+        ItemImageRepresenter.new(item_image).from_json(json)
         expect(item_image.url).to eq("http://amazon")
         expect(item_image.height).to eq(100)
         expect(item_image.width).to eq(50)

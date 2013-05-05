@@ -56,6 +56,8 @@ http://gistflow.com/posts/136-benchmarking-with-ruby
 # TODO Benchmark Roar transformations with extend and with direct class inclusion
 
 http://tonyarcieri.com/dci-in-ruby-is-completely-broken
+http://nicksda.apotomo.de/2013/05/use-roars-new-decorator-if-you-dislike-extend now uses composition / decoration
+so maybe this benchmark is no longer needed
 
 # TODO Session storage in production
 

@@ -8,13 +8,13 @@ describe PickItem do
     let(:subject) { PickItem.new(picked_items_container, item_offer_listing_scraper) }
 
     it "stores item into picked item container" do
-      item_offer_listing_scraper.should_receive(:scrape_offers_for).and_return([])
+      item_offer_listing_scraper.should_receive(:scrape_offers_for).with(item).and_return([])
       subject.pick(item)
       expect(picked_items_container.include?(item)).to eq(true)
     end
 
     it "scrapes additional item offers" do
-      item_offer_listing_scraper.should_receive(:scrape_offers_for).with(item).and_return(Array.new(10) {|index| stub(Offer).as_null_object})
+      item_offer_listing_scraper.should_receive(:scrape_offers_for).with(item).and_return(Array.new(10) {|index| Offer.new(price: index * 10)})
       subject.pick(item)
       expect(item.offers.size).to eq(10)
     end

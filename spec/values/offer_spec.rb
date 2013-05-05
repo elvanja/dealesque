@@ -8,6 +8,20 @@ describe Offer do
         expect(subject).to respond_to("#{property}=")
       end
     end
+
+    it "defaults to Amazon.com for merchant" do
+      expect(subject.merchant).to eq(Offer::MERCHANT_AMAZON_COM)
+    end
+  end
+
+  context "when comparing" do
+    let(:item) { Item.new }
+    let(:first) { Offer.new(item: item, price: 100, merchant: "amazon", condition: Condition::NEW) }
+    let(:second) { Offer.new(item: item, price: 100, merchant: "amazon", condition: Condition::NEW) }
+
+    it "compares offers with the same item, price, merchant and condition as the same" do
+      expect(first == second).to eq(true)
+    end
   end
 
   context "when initializing" do

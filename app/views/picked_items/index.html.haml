@@ -3,6 +3,6 @@
 
 = render partial: "search/search_form"
 
-%ul.thumbnails.per3
+.items
   - @picked_items.each do |item|
     = render partial: "item", locals: {item: item}

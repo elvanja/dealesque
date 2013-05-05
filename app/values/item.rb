@@ -24,15 +24,32 @@ class Item
   end
 
   def offers=(offers)
-    @offers = offers.each { |offer| offer.item = self }.uniq
+    @offers = offers.each { |offer| offer.item = self }
+    remove_duplicate_offers
+    sort_offers_by_price
+    @offers
   end
 
   def append_offers(offers)
     @offers += offers.each { |offer| offer.item = self }
-    @offers.uniq!
+    remove_duplicate_offers
+    sort_offers_by_price
+    @offers
+  end
+
+  def best_offer(condition)
+    @offers.find { |offer| offer.condition == condition }
   end
 
   private
+
+  def remove_duplicate_offers
+    @offers.uniq! { |offer| offer.comparison_token }
+  end
+
+  def sort_offers_by_price
+    @offers.sort! { |offer, other| offer.price <=> other.price }
+  end
 
   # TODO solve this in roar / representable
   # coercion in roar causes problems for collections:

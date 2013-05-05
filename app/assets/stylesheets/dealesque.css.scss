@@ -1,0 +1,70 @@
+@import "bootstrap_and_overrides";
+
+$section_width: 18%;
+
+.item {
+  border-top: 1px solid #eee;
+  padding: 10px 0;
+  clear: both;
+
+  .image_container {
+    @extend .span2;
+    margin-right: -25px;
+    position: relative;
+    float: left;
+
+    img {
+      margin-bottom: 10px;
+    }
+  }
+
+  .title {
+    margin-bottom: 6px;
+    font-size: 17px;
+    font-weight: bold;
+  }
+
+  .details {
+    @extend .span2;
+    float: left;
+    margin: 0;
+    padding:0 10px 0 0;
+
+    .detail {
+      margin-bottom: 5px;
+
+      .list_price {
+        font-weight: bold;
+      }
+
+      .price {
+        color: #900;
+      }
+    }
+  }
+
+  .offers {
+    @extend .span4;
+    border-left: 1px solid #eee;
+    float: left;
+    margin: 0;
+    padding: 0 0 0 20px;
+
+    ul {
+      list-style-type: none;
+      list-style-position: outside;
+      margin: 0;
+      padding: 0;
+    }
+
+    .offer {
+      .price {
+        color: #cc6600;
+      }
+
+      .merchant {
+        font-weight: bold;
+      }
+    }
+  }
+}

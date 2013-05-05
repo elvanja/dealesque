@@ -18,6 +18,10 @@ describe Condition do
       it "is case insensitive" do
         expect(Condition.from("NeW")).to eq(Condition::NEW)
       end
+
+      it "takes the beginning into account" do
+        expect(Condition.from("Used like New")).to eq(Condition::USED)
+      end
     end
 
     context "for not recognized input" do

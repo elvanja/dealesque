@@ -12,6 +12,15 @@ describe Price do
     end
   end
 
+  context "when comparing" do
+    let(:first) { Price.new(fractional: 10, currency: :usd) }
+    let(:second) { Price.new(fractional: 10, currency: :usd) }
+
+    it "compares prices with the same amount as the same" do
+      expect(first == second).to eq(true)
+    end
+  end
+
   context "with price not available constant" do
     it "has zero value" do
       expect(Price::NOT_AVAILABLE.amount).to eq(0)

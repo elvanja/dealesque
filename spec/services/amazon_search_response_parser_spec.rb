@@ -68,9 +68,9 @@ describe AmazonSearchResponseParser do
             let(:offer) { item.offers.first }
 
             it "has relevant data" do
-              expect(offer.id).to eq("eVSHRf84ueoEiikvJwVLKoFpLZpOchpeOuNNiOV%2BdX4m3lAYdIoKaR3TN5CQCUlj%2Bwlk17WfeqG6kRZAlog42awsgwvsA699WpogVV7wuk3a3IYXEUop5YUxpyRj73te0pdKbOpNfNeFlUufvi6BlA%3D%3D")
-              expect(offer.merchant).to eq("the_book_depository_")
-              expect(offer.condition).to eq(Condition::NEW)
+              expect(offer.id).to eq("Qko%2F4HCigNbXDDWsMJgO5nXT77Jal45yqlmvEM9UFSEXPZsMHfp7myLUd3Y6anKdUMwBdrqJgNBZG4CcqFgl5tDDJcpABYO%2BiwySbHFU1sjlWXKcUBAFgZbRlg8xVcaImXNLLsWeYrFMlF4TIQXFSA%3D%3D")
+              expect(offer.merchant).to eq("RoyceBooks")
+              expect(offer.condition).to eq(Condition::USED)
               expect(offer.price).to be_a_kind_of(Price)
             end
 
@@ -78,9 +78,9 @@ describe AmazonSearchResponseParser do
               let(:price) { offer.price }
 
               it "has relevant data" do
-                expect(price.amount).to eq(27.81)
+                expect(price.amount).to eq(23.00)
                 expect(price.currency.to_s).to eq("USD")
-                expect(price.to_s).to eq("$27.81")
+                expect(price.to_s).to eq("$23.00")
               end
             end
           end

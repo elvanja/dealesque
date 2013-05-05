@@ -32,19 +32,20 @@ class PickedItemsController < ApplicationController
   # TODO this is used in CartController too, try to merge
   def retrieve_picked_items_from_session
     create_empty_picked_items
-    @picked_items.from_json(session[:picked_items]) if session[:picked_items]
+    PickedItemsRepresenter.new(@picked_items).from_json(session[:picked_items]) if session[:picked_items]
   end
 
   def create_empty_picked_items
-    @picked_items = PickedItems.new.extend(PickedItemsRepresenter)
+    @picked_items = PickedItems.new
   end
 
   def store_picked_items_to_session
-    session[:picked_items] = @picked_items.to_json
+    session[:picked_items] = PickedItemsRepresenter.new(@picked_items).to_json
   end
 
   def get_item_from_params
-    item = Item.new.extend(ItemRepresenter).from_json(params[:item])
+    item = Item.new
+    ItemRepresenter.new(item).from_json(params[:item])
     yield item if block_given?
     item
   end
