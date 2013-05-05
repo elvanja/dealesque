@@ -9,6 +9,10 @@ describe Condition do
     expect { Condition::USED }.not_to raise_exception
   end
 
+  it "can be collectible" do
+    expect { Condition::COLLECTIBLE }.not_to raise_exception
+  end
+
   context "when validating condition" do
     context "for recognized input" do
       it "creates corresponding condition" do

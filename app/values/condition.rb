@@ -52,6 +52,7 @@ class Condition
 
   Condition.define :NEW, :new
   Condition.define :USED, :used
+  Condition.define :COLLECTIBLE, :collectible
 
   class << self
     def from(value)
