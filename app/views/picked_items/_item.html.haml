@@ -1,4 +1,7 @@
 .item{id: "item_#{index}"}
+  - best_new_offer = item.best_offer(Condition::NEW)
+  - best_used_offer = item.best_offer(Condition::USED)
+
   .image_container
     .image
       = image_tag item.images[:medium].try(:url) || image_path("hot_plate.jpg")
@@ -15,14 +18,14 @@
       %span.price.list_price= " #{item.list_price}"
     .detail
       %span New from:
-      %span.price= " #{item.best_offer(Condition::NEW).try(:price) || 'N/A'}"
+      %span.price= " #{best_new_offer.try(:price) || 'N/A'}"
     .detail
       %span Used from:
-      %span.price= " #{item.best_offer(Condition::USED).try(:price) || 'N/A'}"
+      %span.price= " #{best_used_offer.try(:price) || 'N/A'}"
 
   .offers
     %ul
       - item.offers.each do |offer|
-        = render partial: "offer", locals: {offer: offer}
+        = render partial: "offer", locals: {offer: offer, best_new_offer: best_new_offer, best_used_offer: best_used_offer}
 
   %br{clear: :all}

@@ -1,4 +1,4 @@
-%li.offer
+%li.offer{class: "#{offer.condition} #{offer == best_new_offer || offer == best_used_offer ? "best" : ""}"}
   %span.price= offer.price
   %span.condition= offer.condition
   %span by
