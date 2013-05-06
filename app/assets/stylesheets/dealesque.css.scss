@@ -46,6 +46,12 @@ $section_width: 18%;
       .price {
         color: #900;
       }
+
+      .discounted {
+        //font-weight: normal;
+        color: #333333;
+        text-decoration: line-through;
+      }
     }
   }
 

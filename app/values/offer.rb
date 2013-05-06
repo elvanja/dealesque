@@ -22,4 +22,8 @@ class Offer
   def comparison_token
     "#{price} #{merchant} #{condition}"
   end
+
+  def is_amazon?
+    merchant == MERCHANT_AMAZON_COM
+  end
 end

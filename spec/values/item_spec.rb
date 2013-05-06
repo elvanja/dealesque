@@ -100,6 +100,38 @@ describe Item do
           expect(subject.offers.map(&:price).first).to eq(10)
         end
       end
+
+      context "when calculating if list price is discounted" do
+        it "is not discounted when no best new offer is present" do
+          subject.stub(:best_offer).and_return(nil)
+          expect(subject.list_price_discounted?).to eq(false)
+        end
+
+        it "is not discounted when best new offer is not from amazon" do
+          best_new_offer = Offer.new
+          best_new_offer.stub(:is_amazon?).and_return(false)
+          subject.stub(:best_offer).and_return(best_new_offer)
+          expect(subject.list_price_discounted?).to eq(false)
+        end
+
+        it "is not discounted when best new offer is from amazon but the offer price is not smaller" do
+          best_new_offer = Offer.new
+          best_new_offer.stub(:price).and_return(200)
+          best_new_offer.stub(:is_amazon?).and_return(true)
+          subject.stub(:list_price).and_return(100)
+          subject.stub(:best_offer).and_return(best_new_offer)
+          expect(subject.list_price_discounted?).to eq(false)
+        end
+
+        it "is discounted when best new offer is from amazon and the offer price is smaller" do
+          best_new_offer = Offer.new
+          best_new_offer.stub(:price).and_return(100)
+          best_new_offer.stub(:is_amazon?).and_return(true)
+          subject.stub(:list_price).and_return(200)
+          subject.stub(:best_offer).and_return(best_new_offer)
+          expect(subject.list_price_discounted?).to eq(true)
+        end
+      end
     end
   end
 

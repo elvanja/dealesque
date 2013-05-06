@@ -14,6 +14,18 @@ describe Offer do
     end
   end
 
+  context "when recognizing if it is from Amazon.com" do
+    it "is not when merchant is not Amazon.com" do
+      subject.stub(:merchant).and_return("someone")
+      expect(subject.is_amazon?).to eq(false)
+    end
+
+    it "is when merchant is Amazon.com" do
+      subject.stub(:merchant).and_return(Offer::MERCHANT_AMAZON_COM)
+      expect(subject.is_amazon?).to eq(true)
+    end
+  end
+
   context "when comparing" do
     let(:item) { Item.new }
     let(:first) { Offer.new(item: item, price: 100, merchant: "amazon", condition: Condition::NEW) }

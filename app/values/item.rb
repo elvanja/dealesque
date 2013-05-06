@@ -41,6 +41,12 @@ class Item
     @offers.find { |offer| offer.condition == condition }
   end
 
+  def list_price_discounted?
+    best_new_offer = best_offer(Condition::NEW)
+    return false unless best_new_offer
+    best_new_offer.is_amazon? && best_new_offer.price < list_price
+  end
+
   private
 
   def remove_duplicate_offers

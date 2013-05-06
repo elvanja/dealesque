@@ -15,7 +15,7 @@
   .details
     .detail
       %span List price:
-      %span.price.list_price= " #{item.list_price}"
+      %span.price.list_price{class: item.list_price_discounted? ? "discounted" : ""}= " #{item.list_price}"
     .detail
       %span New from:
       %span.price= " #{best_new_offer.try(:price) || 'N/A'}"
