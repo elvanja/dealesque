@@ -1,11 +1,11 @@
-.item
+.item{id: "item_#{index}"}
   .image_container
     .image
       = image_tag item.images[:medium].try(:url) || image_path("hot_plate.jpg")
       .action
         = form_tag unpick_item_path, method: :delete do
           = hidden_field_tag :item, ItemRepresenter.new(item).to_json
-          = submit_tag 'Unpick', class: "btn btn-warn btn-small"
+          = submit_tag 'Unpick'
 
   .title.h3= link_to item.title, item.url, {target: '_blank', title: "Click to see on Amazon"}
 

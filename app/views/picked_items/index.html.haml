@@ -4,5 +4,5 @@
 = render partial: "search/search_form"
 
 .items
-  - @picked_items.each do |item|
-    = render partial: "item", locals: {item: item}
+  - @picked_items.each_with_index do |item, index|
+    = render partial: "item", locals: {item: item, index: index}

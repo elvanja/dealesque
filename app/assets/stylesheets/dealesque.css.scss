@@ -16,6 +16,12 @@ $section_width: 18%;
     img {
       margin-bottom: 10px;
     }
+
+    .action input {
+      @extend .btn;
+      @extend .btn-warn;
+      @extend .btn-small;
+    }
   }
 
   .title {
@@ -67,4 +73,8 @@ $section_width: 18%;
       }
     }
   }
+}
+
+#item_0 {
+  border-top: 0;
 }
