@@ -7,8 +7,9 @@ class PickedItemsController < ApplicationController
 
   def pick
     get_item_from_params do |item|
-      #PickItem.new(@picked_items).pick(item)
-      @picked_items.add(item)
+      pick_item = PickItem.new(@picked_items)
+      pick_item.add_listener(self)
+      pick_item.pick(item)
       flash[:notice] = "Better pick #{item.title} than the nose :-)"
     end
     redirect_to action: :index
@@ -30,6 +31,10 @@ class PickedItemsController < ApplicationController
 
   private
 
+  def on_offers_added_to(picker, item)
+    # render item
+  end
+
   # TODO this is used in CartController too, try to merge
   def retrieve_picked_items_from_session
     create_empty_picked_items
@@ -37,9 +42,7 @@ class PickedItemsController < ApplicationController
   end
 
   def create_empty_picked_items
-    # TODO the listener should actually be the controller !!!!
     @picked_items = PickedItems.new
-    @picked_items.add_listener(ItemOfferListingScraper.new)
   end
 
   def store_picked_items_to_session

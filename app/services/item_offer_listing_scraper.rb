@@ -6,15 +6,25 @@ require 'money'
 class ItemOfferListingScraper
   include AmazonParser
 
+  # TODO scrape in background, it is too slow for the user to wait
   def scrape_offers_for(item)
     return [] unless valid_offers_url?(item.more_offers_url)
     root = Nokogiri::HTML(get_more_offers_page(item.more_offers_url))
-    scrape_offers(root)
+    scraped_offers = scrape_offers(root)
+    notify_listeners(:on_offers_scrapped_for, item, scraped_offers)
+    scraped_offers
   end
 
-  # TODO scrape in background and add to item in callback (or in some other way), scraping is too slow for the user to wait
-  def on_item_picked(item)
-    item.append_offers(scrape_offers_for(item))
+  def add_listener(listener)
+    (@listeners ||= []) << listener
+  end
+
+  def notify_listeners(event_name, *args)
+    @listeners && @listeners.each do |listener|
+      if listener.respond_to?(event_name)
+        listener.public_send(event_name, self, *args)
+      end
+    end
   end
 
   private
