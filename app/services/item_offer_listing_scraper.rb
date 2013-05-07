@@ -12,6 +12,11 @@ class ItemOfferListingScraper
     scrape_offers(root)
   end
 
+  # TODO scrape in background and add to item in callback (or in some other way), scraping is too slow for the user to wait
+  def on_item_picked(item)
+    item.append_offers(scrape_offers_for(item))
+  end
+
   private
 
   def valid_offers_url?(more_offers_url)
