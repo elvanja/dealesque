@@ -1,10 +1,5 @@
 require 'spec_helper_without_rails'
 
-class Listener
-  def on_offers_added_to(context, item)
-  end
-end
-
 describe PickItem do
   context "when picking" do
     let(:item) { Item.new }
@@ -30,7 +25,7 @@ describe PickItem do
     end
 
     it "notifies about offers added to item" do
-      listener = Listener.new
+      listener = stub
       listener.should_receive(:on_offers_added_to).with(subject, item)
       subject.add_listener(listener)
       subject.on_offers_scrapped_for(stub, item, Array.new(10) {|index| Offer.new(price: index * 10)})

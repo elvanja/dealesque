@@ -12,6 +12,17 @@ describe MockItemWithMoreOffersUrl do
   end
 end
 
+class MockPickItem
+  Surrogate.endow self
+  define(:on_offers_scrapped_for) { |context, item, offers| }
+end
+
+describe MockPickItem do
+  it "is a subset of PickItem" do
+    expect(PickItem).to substitute_for(MockPickItem, subset: true)
+  end
+end
+
 describe ItemOfferListingScraper do
   context "when scraping for item offers" do
     let(:item) { MockItemWithMoreOffersUrl.new(more_offers_url: "http://www.amazon.com/gp/offer-listing/0321584104%3FSubscriptionId%3DAKIAIAPIAMDJ5EGZIPJQ%26tag%3Ddealesque-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D386001%26creativeASIN%3D0321584104") }
@@ -47,6 +58,12 @@ describe ItemOfferListingScraper do
       expect(price.amount).to eq(21.23)
       expect(price.currency.to_s).to eq("USD")
       expect(price.to_s).to eq("$21.23")
+    end
+
+    it "notifies about offers scrapped" do
+      listener = MockPickItem.new
+      subject.add_listener(listener)
+      listener.should_receive(:on_offers_scrapped_for).with(subject, item, offers)
     end
   end
 end
