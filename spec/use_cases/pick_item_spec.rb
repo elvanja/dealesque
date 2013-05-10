@@ -1,22 +1,39 @@
 require 'spec_helper_without_rails'
 
+class Listener
+  def on_offers_added_to(context, item)
+  end
+end
+
 describe PickItem do
   context "when picking" do
     let(:item) { Item.new }
     let(:picked_items_container) { PickedItems.new }
-    let(:item_offer_listing_scraper) { stub(ItemOfferListingScraper) }
+    let(:item_offer_listing_scraper) { stub(ItemOfferListingScraper).as_null_object }
     let(:subject) { PickItem.new(picked_items_container, item_offer_listing_scraper) }
 
     it "stores item into picked item container" do
-      item_offer_listing_scraper.should_receive(:scrape_offers_for).with(item).and_return([])
+      item_offer_listing_scraper.should_receive(:scrape_offers_for)
       subject.pick(item)
       expect(picked_items_container.include?(item)).to eq(true)
     end
 
-    it "scrapes additional item offers" do
-      item_offer_listing_scraper.should_receive(:scrape_offers_for).with(item).and_return(Array.new(10) {|index| Offer.new(price: index * 10)})
+    it "triggers scraping of additional item offers" do
+      item_offer_listing_scraper.should_receive(:add_listener).with(subject)
+      item_offer_listing_scraper.should_receive(:scrape_offers_for)
       subject.pick(item)
+    end
+
+    it "appends additional offers to item upon appropriate event" do
+      subject.on_offers_scrapped_for(stub, item, Array.new(10) {|index| Offer.new(price: index * 10)})
       expect(item.offers.size).to eq(10)
+    end
+
+    it "notifies about offers added to item" do
+      listener = Listener.new
+      listener.should_receive(:on_offers_added_to).with(subject, item)
+      subject.add_listener(listener)
+      subject.on_offers_scrapped_for(stub, item, Array.new(10) {|index| Offer.new(price: index * 10)})
     end
   end
 
