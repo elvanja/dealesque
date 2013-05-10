@@ -7,7 +7,9 @@ class PickedItemsController < ApplicationController
 
   def pick
     get_item_from_params do |item|
-      PickItem.new(@picked_items).pick(item)
+      pick_item = PickItem.new(@picked_items)
+      pick_item.add_listener(self)
+      pick_item.pick(item)
       flash[:notice] = "Better pick #{item.title} than the nose :-)"
     end
     redirect_to action: :index
@@ -28,6 +30,10 @@ class PickedItemsController < ApplicationController
   end
 
   private
+
+  def on_offers_added_to(picker, item)
+    # render item
+  end
 
   # TODO this is used in CartController too, try to merge
   def retrieve_picked_items_from_session
