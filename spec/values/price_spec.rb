@@ -1,22 +1,33 @@
+# encoding: UTF-8
 require 'spec_helper_without_rails'
 
 describe Price do
-  context "with attributes" do
-    %w{amount currency formatted}.each do |property|
-      it "has #{property}" do
-        expect(subject).to respond_to(property)
-        expect(subject).to respond_to("#{property}=")
-      end
+  context "when representing" do
+    it "has amount and currency" do
+      expect(Price.new(fractional: 9999, currency: :eur).to_s).to eq("€99,99")
+    end
+
+    it "places symbol in correct place" do
+      expect(Price.new(fractional: 9999, currency: :sek).to_s).to eq("99,99 kr")
     end
   end
 
-  context "price not available constant" do
-    let(:not_available) { Price::NOT_AVAILABLE }
+  context "when comparing" do
+    let(:first) { Price.new(fractional: 10, currency: :usd) }
+    let(:second) { Price.new(fractional: 10, currency: :usd) }
 
-    it "has specific defaults" do
-      expect(not_available.amount).to eq(0)
-      expect(not_available.currency).to eq("N/A")
-      expect(not_available.formatted).to eq("N/A")
+    it "compares prices with the same amount as the same" do
+      expect(first == second).to eq(true)
+    end
+  end
+
+  context "with price not available constant" do
+    it "has zero value" do
+      expect(Price::NOT_AVAILABLE.amount).to eq(0)
+    end
+
+    it "has specific representation" do
+      expect(Price::NOT_AVAILABLE.to_s).to eq("N/A")
     end
   end
 
@@ -28,7 +39,7 @@ describe Price do
     end
 
     context "with supplied attributes" do
-      let(:attributes) { {amount: 1, currency: 'USD', formatted: '$27.81'} }
+      let(:attributes) { {fractional: 9999, currency: Money::Currency.new(:usd)} }
       let(:subject) { Price.new(attributes) }
 
       it "fills up from supplied attributes" do

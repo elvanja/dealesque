@@ -1,17 +1,31 @@
-// TODO see if there is a way to merge this with item partial in search, only form action is different
+.item{id: "item_#{index}"}
+  - best_new_offer = item.best_offer(Condition::NEW)
+  - best_used_offer = item.best_offer(Condition::USED)
 
-%li.span3
-  .thumbnail
-    %table.table-condensed
-      %tr
-        %td= image_tag item.images[:thumbnail].try(:url) || image_path("hot_plate.jpg")
-        %td.span2
-          %table.table-condensed
-            %tr
-              %td.span2= link_to item.title, item.url, {target: '_blank'}
-            %tr
-              %td= item.list_price.formatted
-    .caption
-      = form_tag unpick_item_path, method: :delete do
-        = hidden_field_tag :item, item.extend(ItemRepresenter).to_json
-        = submit_tag 'Unpick', class: "btn btn-warn btn-small"
+  .image_container
+    .image
+      = image_tag item.images[:medium].try(:url) || image_path("hot_plate.jpg")
+      .action
+        = form_tag unpick_item_path, method: :delete do
+          = hidden_field_tag :item, ItemRepresenter.new(item).to_json
+          = submit_tag 'Unpick'
+
+  .title.h3= link_to item.title, item.url, {target: '_blank', title: "Click to see on Amazon"}
+
+  .details
+    .detail
+      %span List price:
+      %span.price.list_price{class: item.list_price_discounted? ? "discounted" : ""}= " #{item.list_price}"
+    .detail
+      %span New from:
+      %span.price= " #{best_new_offer.try(:price) || 'N/A'}"
+    .detail
+      %span Used from:
+      %span.price= " #{best_used_offer.try(:price) || 'N/A'}"
+
+  .offers
+    %ul
+      - item.offers.each do |offer|
+        = render partial: "offer", locals: {offer: offer, best_new_offer: best_new_offer, best_used_offer: best_used_offer}
+
+  %br{clear: :all}

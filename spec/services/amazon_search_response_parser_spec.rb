@@ -31,12 +31,13 @@ describe AmazonSearchResponseParser do
             expect(item.title).to eq("Practical Object-Oriented Design in Ruby: An Agile Primer (Addison-Wesley Professional Ruby Series)")
             expect(item.url).to eq("http://www.amazon.com/Practical-Object-Oriented-Design-Ruby-Addison-Wesley/dp/0321721330%3FSubscriptionId%3DAKIAIAPIAMDJ5EGZIPJQ%26tag%3Ddealesque-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0321721330")
             expect(item.group).to eq("Book")
+            expect(item.more_offers_url).to eq("http://www.amazon.com/gp/offer-listing/0321721330%3FSubscriptionId%3DAKIAIAPIAMDJ5EGZIPJQ%26tag%3Ddealesque-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D386001%26creativeASIN%3D0321721330")
           end
 
           it "has list price" do
             expect(item.list_price.amount).to eq(39.99)
-            expect(item.list_price.currency).to eq("USD")
-            expect(item.list_price.formatted).to eq("$39.99")
+            expect(item.list_price.currency.to_s).to eq("USD")
+            expect(item.list_price.to_s).to eq("$39.99")
           end
 
           it "has all the images" do
@@ -67,8 +68,9 @@ describe AmazonSearchResponseParser do
             let(:offer) { item.offers.first }
 
             it "has relevant data" do
-              expect(offer.merchant).to eq("the_book_depository_")
-              expect(offer.condition).to eq(Condition::NEW)
+              expect(offer.id).to eq("Qko%2F4HCigNbXDDWsMJgO5nXT77Jal45yqlmvEM9UFSEXPZsMHfp7myLUd3Y6anKdUMwBdrqJgNBZG4CcqFgl5tDDJcpABYO%2BiwySbHFU1sjlWXKcUBAFgZbRlg8xVcaImXNLLsWeYrFMlF4TIQXFSA%3D%3D")
+              expect(offer.merchant).to eq("RoyceBooks")
+              expect(offer.condition).to eq(Condition::USED)
               expect(offer.price).to be_a_kind_of(Price)
             end
 
@@ -76,9 +78,9 @@ describe AmazonSearchResponseParser do
               let(:price) { offer.price }
 
               it "has relevant data" do
-                expect(price.amount).to eq(27.81)
-                expect(price.currency).to eq("USD")
-                expect(price.formatted).to eq("$27.81")
+                expect(price.amount).to eq(23.00)
+                expect(price.currency.to_s).to eq("USD")
+                expect(price.to_s).to eq("$23.00")
               end
             end
           end

@@ -6,8 +6,8 @@ describe OfferRepresenter do
 
     context "to JSON" do
       it "represents properties" do
-        names = %({"price":{},"merchant":"Amazon","condition":"used"})
-        expect(offer.extend(subject).to_json).to be_json_eql(names)
+        names = %({"price":{"currency":"USD","fractional":0},"merchant":"Amazon","condition":"used"})
+        expect(OfferRepresenter.new(offer).to_json).to be_json_eql(names)
       end
     end
   end
@@ -17,10 +17,11 @@ describe OfferRepresenter do
       let(:json) { %({"price":{},"merchant":"Amazon","condition":"used"}) }
 
       it "consumes properties" do
-        offer = Offer.new.extend(subject).from_json(json)
+        offer = Offer.new
+        OfferRepresenter.new(offer).from_json(json)
         expect(offer.price).to be_a_kind_of(Price)
         expect(offer.merchant).to eq("Amazon")
-        expect(offer.condition).to eq("used")
+        expect(offer.condition).to eq(Condition::USED)
       end
     end
   end

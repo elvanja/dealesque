@@ -3,8 +3,8 @@ require 'roar/representer/json'
 
 require_relative 'item_representer'
 
-module PickedItemsRepresenter
+class PickedItemsRepresenter < Representable::Decorator
   include Roar::Representer::JSON
 
-  collection :items, extend: ItemRepresenter, class: Item
+  collection :items, class: Item, decorator: ItemRepresenter
 end

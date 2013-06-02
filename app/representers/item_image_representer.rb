@@ -1,7 +1,7 @@
 require 'roar/representer'
 require 'roar/representer/json'
 
-module ItemImageRepresenter
+class ItemImageRepresenter < Representable::Decorator
   include Roar::Representer::JSON
 
   property :url

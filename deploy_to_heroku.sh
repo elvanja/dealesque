@@ -33,11 +33,11 @@ echo "checking working tree status, must be clear"
 require_clean_work_tree
 echo "creating deploy branch"
 git checkout -b deploy_to_heroku
-echo "package gems"
-bundle package --all
-echo "commiting packaged gems"
-git add -A .
-git commit -m "added packaged gems"
+#echo "package gems"
+#bundle package --all
+#echo "commiting packaged gems"
+#git add -A .
+#git commit -m "added packaged gems"
 echo "compiling assets"
 RAILS_ENV=production rake assets:precompile
 echo "commiting compiled assets"

@@ -1,10 +1,9 @@
 require 'roar/representer'
 require 'roar/representer/json'
 
-module PriceRepresenter
+class PriceRepresenter < Representable::Decorator
   include Roar::Representer::JSON
 
-  property :amount
-  property :currency
-  property :formatted
+  property :fractional
+  property :currency, getter: lambda { |opts| self.currency_as_string }
 end

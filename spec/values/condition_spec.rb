@@ -9,6 +9,10 @@ describe Condition do
     expect { Condition::USED }.not_to raise_exception
   end
 
+  it "can be collectible" do
+    expect { Condition::COLLECTIBLE }.not_to raise_exception
+  end
+
   context "when validating condition" do
     context "for recognized input" do
       it "creates corresponding condition" do
@@ -17,6 +21,10 @@ describe Condition do
 
       it "is case insensitive" do
         expect(Condition.from("NeW")).to eq(Condition::NEW)
+      end
+
+      it "takes the beginning into account" do
+        expect(Condition.from("Used like New")).to eq(Condition::USED)
       end
     end
 

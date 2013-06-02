@@ -7,7 +7,7 @@ describe UnpickItem do
     let(:subject) { UnpickItem.new(picked_items_container) }
 
     before(:each) do
-      PickItem.new(picked_items_container).pick(item)
+      picked_items_container.add(item)
     end
 
     it "removes item from picked item container" do

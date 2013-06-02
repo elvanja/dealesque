@@ -8,13 +8,16 @@ gem 'thin'
 
 # Amazon Product Advertising API support
 gem 'vacuum'
-gem 'representable', :git => "../representable_fix"
+gem 'representable'
 gem 'roar'
 gem 'roar-rails'
 gem 'virtus'
+gem 'mechanize'
+gem 'money'
 
-# Gems used only for assets and not required
-# in production environments by default.
+# other
+gem 'wisper', '~>1.0.0'
+
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
@@ -25,11 +28,18 @@ end
 
 group :development, :test do
   gem 'therubyracer', :platforms => :ruby # https://devcenter.heroku.com/articles/rails3x-asset-pipeline-cedar
+end
+
+group :test do
   gem 'rspec-rails'
   gem 'rspec-given'
   gem 'json_spec'
-  gem 'vcr'
   gem 'surrogate'
+  gem 'vcr'
+  gem 'jeff', '= 0.6.2' # see excon gem details below
+  gem 'excon' # use older jeff gem, this will force older excon, the one supported by vcr
+  gem 'faraday'
+  gem 'webmock', '<  1.10.0' # use this until vcr supports latest versions
 end
 
 group :development do

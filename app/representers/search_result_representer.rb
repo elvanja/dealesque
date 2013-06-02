@@ -3,9 +3,9 @@ require 'roar/representer/json'
 
 require_relative 'item_representer'
 
-module SearchResultRepresenter
+class SearchResultRepresenter < Representable::Decorator
   include Roar::Representer::JSON
 
   property :search_terms
-  collection :items, extend: ItemRepresenter, class: Item
+  collection :items, class: Item, decorator: ItemRepresenter
 end
