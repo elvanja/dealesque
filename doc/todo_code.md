@@ -1,12 +1,37 @@
-# TODO Test other Amazon API libraries
+# TODO Item repository
 
-a2z seems good enough
-https://github.com/mhuggins/a2z
-https://github.com/hakanensari/vacuum/
-https://github.com/jugend/amazon-ecs/
-https://github.com/phoet/asin/
-http://www.caliban.org/ruby/ruby-aws/
-https://github.com/christianhellsten/amazon-json-api
+Ruby example repositories
+http://solnic.eu/2012/12/20/datamapper-2-status-and-roadmap.html
+https://github.com/datamapper/dm-mapper
+https://github.com/fredwu/datamappify
+https://github.com/8thlight/artisan-repository
+https://github.com/8thlight/artisan-memory-repository
+https://github.com/8thlight/artisan-ar-repository
+
+ Hexagonal, might help
+https://github.com/grounded/afterburnercms/blob/master/documentation/architecture.md
+http://alistair.cockburn.us/Hexagonal+architecture
+https://www.obviouscasts.com/
+
+Use Redis, since we don't need full persistence
+E.g. items will be stored with a predefined expiry
+
+Take care that expiry of items doesn't conflict with session expiry
+E.g.:
+* item expiry = 20 minutes
+* session expiry = 10 minutes
+* a user picks item, plays around for 30 minutes
+  - session should contain all the picked items
+  - picked items should not expire during the session activity
+This means items should be touched / expired anew after each http request
+Alternatively, keep items all the time and remove unused ones in a second job
+
+Redis libraries
+https://github.com/soveran/ohm
+https://github.com/redis/redis-rb
+https://github.com/nateware/redis-objects
+https://github.com/whoahbot/dm-redis-adapter
+
 
 # TODO Background processing
 
@@ -17,6 +42,14 @@ http://stackoverflow.com/questions/897605/ruby-on-rails-how-to-run-things-in-the
 ## Sidekiq
 https://github.com/mperham/sidekiq/wiki
 https://devcenter.heroku.com/articles/procfile
+http://docs.cloudfoundry.com/docs/using/deploying-apps/ruby/rails-running-worker-tasks.html
+http://railscasts.com/episodes/366-sidekiq
+
+## Starling / Workling
+http://railscasts.com/episodes/128-starling-and-workling
+http://davedupre.com/2008/03/25/ruby-background-tasks-with-starling/
+https://github.com/starling/starling
+https://github.com/purzelrakete/workling/tree
 
 ## Push to client / web
 
@@ -24,6 +57,20 @@ https://github.com/DanKnox/websocket-rails
 https://github.com/imanel/websocket-ruby
 http://www.pogoapp.com/blog/posts/websockets-on-rails-4-and-ruby-2
 https://github.com/afcapel/alondra
+
+## Testing async behaviour
+http://www.ruby-forum.com/topic/2566889
+https://gist.github.com/mattwynne/1228927
+
+# TODO Test other Amazon API libraries
+
+a2z seems good enough
+https://github.com/mhuggins/a2z
+https://github.com/hakanensari/vacuum/
+https://github.com/jugend/amazon-ecs/
+https://github.com/phoet/asin/
+http://www.caliban.org/ruby/ruby-aws/
+https://github.com/christianhellsten/amazon-json-api
 
 # TODO Implement controllers to be testable
 
@@ -113,11 +160,11 @@ Solutions, Heroku related
         * [MongoHQ](https://addons.heroku.com/mongohq) 512 MB, 50 MB memory => 40.000 sessions
 * Cache
     * Memcached
-        * Loosing a part of cache means we loose the intire session
+        * Loosing a part of cache means we loose the entire session
         * Heroku free options
             * [MemCachier](https://addons.heroku.com/memcachier) 25 MB => 2.000 sessions
     * Redis
-        * Loosing a part of cache means we loose the intire session
+        * Loosing a part of cache means we loose the entire session
         * Heroku free options
             * [RedisToGo](https://addons.heroku.com/redistogo) 5 MB => 400 sessions
             * [MyRedis](https://addons.heroku.com/myredis) 100 MB => 8.000 sessions
