@@ -14,7 +14,7 @@ end
 
 class MockPickItem
   Surrogate.endow self
-  define(:on_offers_scrapped_for) { |context, item, offers| }
+  define(:on_offers_scrapped_for) { |item, offers| }
 end
 
 describe MockPickItem do

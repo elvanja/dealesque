@@ -8,7 +8,7 @@ class PickedItemsController < ApplicationController
   def pick
     get_item_from_params do |item|
       pick_item = PickItem.new(@picked_items)
-      pick_item.add_listener(self)
+      pick_item.subscribe(self)
       pick_item.pick(item)
       flash[:notice] = "Better pick #{item.title} than the nose :-)"
     end
@@ -31,7 +31,7 @@ class PickedItemsController < ApplicationController
 
   private
 
-  def on_offers_added_to(picker, item)
+  def on_offers_added_to(item)
     # render item
   end
 

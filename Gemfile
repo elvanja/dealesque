@@ -15,8 +15,9 @@ gem 'virtus'
 gem 'mechanize'
 gem 'money'
 
-# Gems used only for assets and not required
-# in production environments by default.
+# other
+gem 'wisper', '~>1.0.0'
+
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
