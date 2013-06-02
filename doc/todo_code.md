@@ -1,3 +1,30 @@
+# TODO Test other Amazon API libraries
+
+a2z seems good enough
+https://github.com/mhuggins/a2z
+https://github.com/hakanensari/vacuum/
+https://github.com/jugend/amazon-ecs/
+https://github.com/phoet/asin/
+http://www.caliban.org/ruby/ruby-aws/
+https://github.com/christianhellsten/amazon-json-api
+
+# TODO Background processing
+
+http://blog.arkency.com/2012/10/sending-async-data-from-rails-into-the-world/
+http://blog.arkency.com/2012/11/sending-async-data-from-rails-into-the-world-part-ii/
+http://stackoverflow.com/questions/897605/ruby-on-rails-how-to-run-things-in-the-background
+
+## Sidekiq
+https://github.com/mperham/sidekiq/wiki
+https://devcenter.heroku.com/articles/procfile
+
+## Push to client / web
+
+https://github.com/DanKnox/websocket-rails
+https://github.com/imanel/websocket-ruby
+http://www.pogoapp.com/blog/posts/websockets-on-rails-4-and-ruby-2
+https://github.com/afcapel/alondra
+
 # TODO Implement controllers to be testable
 
 Use gem at https://github.com/xaviershay/poniard
@@ -38,15 +65,6 @@ http://rubysource.com/rspec-given/
 http://rubysource.com/get-your-app-ready-for-rails-4/
 Enable threadsafe, dalli or caching
 Turbolinks / pjax for milestone 0.3
-
-# TODO Test other Amazon API libraries
-
-Especially amazon-ecs
-https://github.com/hakanensari/vacuum/
-https://github.com/phoet/asin/
-https://github.com/jugend/amazon-ecs/
-http://www.caliban.org/ruby/ruby-aws/
-https://github.com/christianhellsten/amazon-json-api
 
 # TODO Apply benchmarking gem instead of manually calculating average
 

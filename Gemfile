@@ -35,7 +35,7 @@ group :test do
   gem 'json_spec'
   gem 'surrogate'
   gem 'vcr'
-  gem 'jeff', '= 0.4.3' # see excon gem details below
+  gem 'jeff', '= 0.6.2' # see excon gem details below
   gem 'excon' # use older jeff gem, this will force older excon, the one supported by vcr
   gem 'faraday'
   gem 'webmock', '<  1.10.0' # use this until vcr supports latest versions

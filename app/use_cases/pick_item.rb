@@ -14,6 +14,7 @@ class PickItem
   def pick(item)
     @picked_items_container.add(item)
     @item_offer_listing_scraper.scrape_offers_for(item)
+    item
   end
 
   def add_listener(listener)
