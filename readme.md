@@ -23,3 +23,5 @@ Sure :-) For example, it would be nice if Amazon opened up their Wish List API a
 That way you could prepare a list on Amazon, and let Dealesque use items in that list directly
 Unfortunately, that can't be done at this time, but maybe we'll find a way around this
 Stay tuned!
+
+Copyright 2013 Vanja Radovanović
